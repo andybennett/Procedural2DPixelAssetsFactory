@@ -201,7 +201,7 @@ public class PixelGridUtils {
 	}
 
 	/**
-	 * Takes the passed in grid and extends it by the passes in amount
+	 * Takes the passed in grid and extends it by the passed in amount
 	 * 
 	 * @param grid {@link Pixel}[][]
 	 * @param extendAmount {@link int}
@@ -228,8 +228,7 @@ public class PixelGridUtils {
 	 * This does have the effect of leaving some plain areas on the generated
 	 * vessels - effects larger ones more.
 	 * 
-	 * @TODO Implement some noise / patterns to any pixels set as
-	 *       Pixel.SECONDARY
+	 * @TODO Implement some noise to any pixels set as Pixel.SECONDARY
 	 * 
 	 * @param grid {@link Pixel}[][]
 	 */
