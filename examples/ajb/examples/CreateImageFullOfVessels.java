@@ -21,9 +21,9 @@ public class CreateImageFullOfVessels {
 		List<Pixel[][]> grids = new ArrayList<Pixel[][]>();
 
 		factory.ROWS = 500; // height
-		factory.COLS = 40; // width
-		factory.STEPS = 20; // how many iterations
-		factory.SUB_STEPS = 300; // how many steps within each iteration
+		factory.COLS = 25; // width
+		factory.STEPS = 35; // how many iterations
+		factory.SUB_STEPS = 200; // how many steps within each iteration
 
 		// create a 100 vessels and add to our list
 		for (int i = 0; i < 500; i++) {
@@ -42,11 +42,11 @@ public class CreateImageFullOfVessels {
 		}
 
 		Color primaryColor = Color.LIGHT_GRAY; // Color.decode("#7FB347");
-		Color secondaryColor = Color.GRAY; //Color.decode("#5eaa47");
+		Color secondaryColor = Color.decode("#79ABFF");
 		Color tertiaryColor = Color.GRAY;
 
 		// create image
-		BufferedImage img = ImageUtils.outputAllToImage(grids, 600, 600, null, primaryColor, secondaryColor, tertiaryColor, null);
+		BufferedImage img = ImageUtils.outputAllToImage(grids, 800, 800, null, primaryColor, secondaryColor, tertiaryColor, null);
 
 		// save image
 		// replace with the path of wherever you want the image to go - if left
