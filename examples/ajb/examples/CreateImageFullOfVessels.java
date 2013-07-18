@@ -21,7 +21,7 @@ public class CreateImageFullOfVessels {
 		// list to hold all the vessels we generate
 		List<Pixel[][]> grids = new ArrayList<Pixel[][]>();
 
-		// create a 100 vessels and add to our list
+		// create X vessels and add to our list
 		for (int i = 0; i < 50; i++) {
 			
 			factory.ROWS = 1000; // height
@@ -44,6 +44,7 @@ public class CreateImageFullOfVessels {
 		}
 
 		//Blue - Color.decode("#79ABFF");
+		//Red - Color.decode("#D25252");
 		
 		Color primaryColor = Color.LIGHT_GRAY; // Color.decode("#7FB347");
 		Color secondaryColor = Color.decode("#D25252");
