@@ -222,13 +222,8 @@ public class PixelGridUtils {
 
 	/**
 	 * Loops through each pixel in the grid and works out if they are surrounded
-	 * by other filled pixels i.e. no straight path to the edge of the grid
-	 * without encountering anything but empty pixels.
-	 * 
-	 * This does have the effect of leaving some plain areas on the generated
-	 * vessels - effects larger ones more.
-	 * 
-	 * @TODO Implement some noise to any pixels set as Pixel.SECONDARY
+	 * by filled pixels i.e. a straight path through other pixels until it hits a 
+	 * pixel of value Pixel.FILLED
 	 * 
 	 * @param grid {@link Pixel}[][]
 	 */
@@ -280,6 +275,13 @@ public class PixelGridUtils {
 		}
 	}
 	
+	/**
+	 * Loops through each pixel in the grid and works out if they are surrounded
+	 * by filled pixels i.e. a straight path through other pixels until it hits a 
+	 * pixel of value Pixel.FILLED without going over any pixels with value Pixel.EMPTY
+	 * 
+	 * @param grid {@link Pixel}[][]
+	 */	
 	public static void addNoiseToFlatPixels(Pixel[][] grid) {
 
 		for (int r = 0; r < grid.length; r++) {
