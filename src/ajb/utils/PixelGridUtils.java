@@ -3,6 +3,7 @@ package ajb.utils;
 import java.awt.Point;
 
 import ajb.domain.Pixel;
+import ajb.random.RandomInt;
 
 public class PixelGridUtils {
 
@@ -274,6 +275,75 @@ public class PixelGridUtils {
 
 					if (filledPixelAbove && filledPixelBelow && filledPixelOnTheLeft && filledPixelOnTheRight) {
 						grid[r][c].value = Pixel.SECONDARY;
+					}
+				}
+			}
+		}
+	}
+	
+	public static void addNoiseToFlatPixels(Pixel[][] grid) {
+
+		for (int r = 0; r < grid.length; r++) {
+			for (int c = 0; c < grid[0].length; c++) {
+
+				if (grid[r][c].value == Pixel.SECONDARY) {
+
+					boolean filledPixelAbove = false;
+					boolean filledPixelBelow = false;
+					boolean filledPixelOnTheLeft = false;
+					boolean filledPixelOnTheRight = false;
+
+					for (int r1 = r - 1; r1 > 0; r1--) {
+						if (grid[r1][c].value == Pixel.EMPTY) {
+							filledPixelAbove = false;
+							break;
+						} else if (grid[r1][c].value == Pixel.FILLED) {
+							filledPixelAbove = true;
+							break;
+						}
+					}
+
+					for (int r1 = r + 1; r1 < grid.length; r1++) {
+						if (grid[r1][c].value == Pixel.EMPTY) {
+							filledPixelBelow = false;
+							break;
+						} else if (grid[r1][c].value == Pixel.FILLED) {
+							filledPixelBelow = true;
+							break;
+						}
+					}
+
+					for (int c1 = c - 1; c1 > 0; c1--) {
+						if (grid[r][c1].value == Pixel.EMPTY) {
+							filledPixelOnTheLeft = false;
+							break;
+						} else if (grid[r][c1].value == Pixel.FILLED) {
+							filledPixelOnTheLeft = true;
+							break;
+						}
+					}
+
+					for (int c1 = c + 1; c1 < grid[0].length; c1++) {
+						if (grid[r][c1].value == Pixel.EMPTY) {
+							filledPixelOnTheLeft = false;
+							break;
+						} else if (grid[r][c1].value == Pixel.FILLED) {
+							filledPixelOnTheRight = true;
+							break;
+						}
+					}
+
+					if (filledPixelAbove && filledPixelBelow && filledPixelOnTheLeft && filledPixelOnTheRight) {
+						
+						grid[r][c].value = Pixel.TERTIARY;
+						
+						int random = RandomInt.anyRandomIntRange(1, 100);
+						
+						if (random < 10) {
+							grid[r][c].value = Pixel.BORDER;
+						} else if (random > 80) {
+							grid[r][c].value = Pixel.FILLED;
+						}
 					}
 				}
 			}

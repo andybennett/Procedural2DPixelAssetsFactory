@@ -32,7 +32,7 @@ public class CreateDirectoryFullOfVessels {
 			grid = PixelGridUtils.extendGrid(grid, 8);
 			PixelGridUtils.fillEmptySurroundedPixelsInGrid(grid);
 			
-			BufferedImage img = ImageUtils.outputToImage(grid, null, Color.decode("#79ABFF"), Color.decode("#79ABFF"), null);
+			BufferedImage img = ImageUtils.outputToImage(grid, null, Color.decode("#79ABFF"), Color.decode("#79ABFF"), null, null);
 			
 			// i.e. c://<directory>//<directory>//<file name prefix>
 			ImageUtils.save(img, "png", "<directory path and file name prefix here - must already exist>" + i);

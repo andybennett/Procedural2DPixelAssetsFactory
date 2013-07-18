@@ -17,7 +17,8 @@ import ajb.random.RandomColor;
 
 public class ImageUtils {
 
-	public static BufferedImage outputToImage(Pixel[][] grid, Color borderColor, Color primaryColor, Color secondaryColor, Color emptyColor) {
+	public static BufferedImage outputToImage(Pixel[][] grid, Color borderColor, Color primaryColor, Color secondaryColor,
+			Color tertiaryColor, Color emptyColor) {
 
 		GraphicsConfiguration gc = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDefaultConfiguration();
 
@@ -45,6 +46,14 @@ public class ImageUtils {
 			secondColor = RandomColor.anyRandomColor();
 		}
 
+		Color thirdColor = null;
+
+		if (tertiaryColor != null) {
+			thirdColor = tertiaryColor;
+		} else {
+			thirdColor = RandomColor.anyRandomColor();
+		}
+
 		for (int r = 0; r < grid.length; r++) {
 			for (int c = 0; c < grid[0].length; c++) {
 
@@ -67,6 +76,10 @@ public class ImageUtils {
 
 					gr.setColor(secondColor);
 					gr.fillRect(c * scaleFactor, r * scaleFactor, scaleFactor, scaleFactor);
+				} else if (grid[r][c].value == Pixel.TERTIARY) {
+
+					gr.setColor(thirdColor);
+					gr.fillRect(c * scaleFactor, r * scaleFactor, scaleFactor, scaleFactor);
 				} else if (grid[r][c].value == Pixel.EMPTY) {
 
 					if (emptyColor != null) {
@@ -83,7 +96,7 @@ public class ImageUtils {
 	}
 
 	public static BufferedImage outputAllToImage(List<Pixel[][]> grids, int width, int height, Color borderColor, Color primaryColor,
-			Color secondaryColor, Color emptyColor) {
+			Color secondaryColor, Color tertiaryColor, Color emptyColor) {
 
 		GraphicsConfiguration gc = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDefaultConfiguration();
 
@@ -103,7 +116,7 @@ public class ImageUtils {
 
 		for (Pixel[][] grid : grids) {
 
-			BufferedImage vesselImg = outputToImage(grid, borderColor, primaryColor, secondaryColor, emptyColor);
+			BufferedImage vesselImg = outputToImage(grid, borderColor, primaryColor, secondaryColor, tertiaryColor, emptyColor);
 
 			if (x + (vesselImg.getWidth() + 10) > width) {
 				x = 10;
