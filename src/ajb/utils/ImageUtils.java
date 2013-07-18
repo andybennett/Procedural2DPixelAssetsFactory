@@ -125,7 +125,7 @@ public class ImageUtils {
 			}
 
 			if (y + (vesselImg.getHeight() + 10) > height) {
-				break;
+				continue;
 			}
 
 			gr.drawImage(vesselImg, x, y, null);
