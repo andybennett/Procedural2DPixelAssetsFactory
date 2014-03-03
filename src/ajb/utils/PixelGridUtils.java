@@ -340,9 +340,9 @@ public class PixelGridUtils {
 						
 						int random = RandomInt.anyRandomIntRange(1, 100);
 						
-						if (random < 20) {
+						if (random < 10) {
 							grid[r][c].value = Pixel.BORDER;
-						} else if (random > 80) {
+						} else if (random > 90) {
 							grid[r][c].value = Pixel.FILLED;
 						}
 					}

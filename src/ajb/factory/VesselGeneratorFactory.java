@@ -48,6 +48,17 @@ public class VesselGeneratorFactory {
 
 			point = null;
 		}
+		
+		for (int i = 0; i < STEPS; i++) {
+			point = getRandomFilledPoint(grid);
+			
+			for (int y = 0; y < SUB_STEPS; y++) {
+				// now process points randomly starting with one determined from
+				// above
+				point = processPoint(point, grid);
+			}			
+		}
+		
 
 		return grid;
 	}
@@ -133,5 +144,27 @@ public class VesselGeneratorFactory {
 		}
 
 		return newPoint;
+	}
+	
+	private Point getRandomFilledPoint(Pixel[][] grid) {
+		
+		Point point = null;
+		
+		while (point == null) {
+			
+			int x = RandomInt.anyRandomIntRange(1, ROWS - 1);
+			int y = RandomInt.anyRandomIntRange(1, COLS - 1);
+			
+			Pixel possiblePixel = grid[x][y];
+			
+			if (possiblePixel.value == Pixel.FILLED) {
+				point = new Point();
+				point.x = x;
+				point.y = y;
+			}
+		}
+		
+		return point;
+		
 	}
 }
