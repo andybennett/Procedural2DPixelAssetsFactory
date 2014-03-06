@@ -93,6 +93,11 @@ public class ImageUtils {
 		}
 
 		gr.dispose();
+		
+        GaussianFilter filter = new GaussianFilter();
+        filter.setRadius(1f);
+        img = filter.filter(img, null);
+        
 		return img;
 	}
 
@@ -140,6 +145,10 @@ public class ImageUtils {
 
 		gr.dispose();
 
+        GaussianFilter filter = new GaussianFilter();
+        filter.setRadius(1f);
+        img = filter.filter(img, null);		
+		
 		return img;
 	}
 
@@ -147,7 +156,7 @@ public class ImageUtils {
 
 		File file = new File(fileName + "." + ext);
 
-		try {
+		try {			
 			ImageIO.write(image, ext, file);
 		} catch (IOException e) {
 			System.out.println("Write error for " + file.getPath() + ": " + e.getMessage());
