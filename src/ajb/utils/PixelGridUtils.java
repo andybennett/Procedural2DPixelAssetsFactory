@@ -350,4 +350,61 @@ public class PixelGridUtils {
 			}
 		}
 	}
+	
+	public static Point getRandomFilledPoint(Pixel[][] grid) {
+		
+		Point point = null;
+		
+		while (point == null) {
+			
+			int x = RandomInt.anyRandomIntRange(1, grid.length - 1);
+			int y = RandomInt.anyRandomIntRange(1, grid[0].length - 1);
+			
+			Pixel possiblePixel = grid[x][y];
+			
+			if (possiblePixel.value == Pixel.FILLED) {
+				point = new Point();
+				point.x = x;
+				point.y = y;
+			}
+		}
+		
+		return point;
+		
+	}	
+	
+	public static void mergeGridsRandomly(Pixel[][] sourceGrid, Pixel[][] targetGrid) {
+		
+		int attempts = 0;
+		
+		Point targetPoint = null;
+		
+		while (targetPoint == null || attempts < 10) {
+			
+			Point potentialPoint = getRandomFilledPoint(targetGrid);
+			potentialPoint.x = potentialPoint.x - sourceGrid.length-1;
+			potentialPoint.y = potentialPoint.y - sourceGrid[0].length-1;
+			
+			if (isPointWithinGrid(potentialPoint, targetGrid)) {
+				targetPoint = potentialPoint;
+			}
+			
+			attempts++;
+		}
+		
+		if (targetPoint != null) {	
+
+			int startY = targetPoint.y;
+			
+			for (int r = 0; r < sourceGrid.length; r++) {
+				for (int c = 0; c < sourceGrid[0].length; c++) {
+					targetGrid[targetPoint.x][targetPoint.y].value = sourceGrid[r][c].value;
+					targetPoint.y = targetPoint.y + 1;
+				}
+				
+				targetPoint.x = targetPoint.x + 1;
+				targetPoint.y = startY;
+			}			
+		}				
+	}
 }

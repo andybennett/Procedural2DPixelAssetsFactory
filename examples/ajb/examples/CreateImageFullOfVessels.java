@@ -22,22 +22,9 @@ public class CreateImageFullOfVessels {
 		List<Pixel[][]> grids = new ArrayList<Pixel[][]>();
 
 		// create X vessels and add to our list
-		for (int i = 0; i < 100; i++) {
-			
-			factory.ROWS = 1000; // height
-			factory.COLS = 1000; // width
-			factory.STEPS = RandomInt.anyRandomIntRange(10, 50); // how many iterations
-			factory.SUB_STEPS = RandomInt.anyRandomIntRange(50, 100); // how many steps within each iteration			
-			
-			Pixel[][] grid = factory.create();
+		for (int i = 0; i < 500; i++) {
 
-			// @TODO Wrap all this up within the factory?
-			grid = PixelGridUtils.floor(grid);
-			grid = PixelGridUtils.mirrorCopyGridHorizontally(grid);
-			grid = PixelGridUtils.addBorders(grid);
-			grid = PixelGridUtils.floor(grid);
-			PixelGridUtils.fillEmptySurroundedPixelsInGrid(grid);
-			PixelGridUtils.addNoiseToFlatPixels(grid);
+			Pixel[][] grid = factory.create();
 
 			// add grid to list
 			grids.add(grid);

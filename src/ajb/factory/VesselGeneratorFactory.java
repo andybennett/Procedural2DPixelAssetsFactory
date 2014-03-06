@@ -1,6 +1,8 @@
 package ajb.factory;
 
 import java.awt.Point;
+import java.util.ArrayList;
+import java.util.List;
 
 import ajb.domain.NeighbouringPoint;
 import ajb.domain.Pixel;
@@ -10,20 +12,80 @@ import ajb.utils.PixelGridUtils;
 
 public class VesselGeneratorFactory {
 
-	// @TODO should really be private and have getter and setters
-	public int ROWS = 1000;
-	public int COLS = 20;
-	public int STEPS = 10;
-	public int SUB_STEPS = 100;
+	private final int ROWS = 500;
+	private final int COLS = 500;
 
 	public Pixel[][] create() {
+
+		Pixel[][] grid = createBaseGrid();
+		addExtras(grid);
+
+		grid = PixelGridUtils.floor(grid);
+		grid = PixelGridUtils.mirrorCopyGridHorizontally(grid);
+		grid = PixelGridUtils.addBorders(grid);
+		grid = PixelGridUtils.floor(grid);
+		PixelGridUtils.fillEmptySurroundedPixelsInGrid(grid);
+		PixelGridUtils.addNoiseToFlatPixels(grid);
+
+		if (validateGrid(grid)) {		
+			return grid;
+		} else {
+			return create();
+		}
+	}
+
+	private boolean validateGrid(Pixel[][] grid) {
+		
+		boolean result = true;
+		
+		int noOfFilledPixels = 0;
+		int noOfSecondaryPixels = 0;
+		int noOfTertiaryPixels = 0;
+		int noOfBorderPixels = 0;
+		int noOfEmptyPixels = 0;
+		
+		for (int x = 0; x < grid.length; x++) {
+			for (int y = 0; y < grid[0].length; y++) {
+				if (grid[x][y].value == Pixel.FILLED) {
+					noOfFilledPixels++;
+				} else if (grid[x][y].value == Pixel.SECONDARY) {
+					noOfSecondaryPixels++;
+				} else if (grid[x][y].value == Pixel.TERTIARY) {
+					noOfTertiaryPixels++;
+				} else if (grid[x][y].value == Pixel.BORDER) {
+					noOfBorderPixels++;
+				} else if (grid[x][y].value == Pixel.EMPTY) {
+					noOfEmptyPixels++;
+				}
+			}
+		}
+		
+		//System.out.println("FILLED:" + noOfFilledPixels + " SECONDARY:" + noOfSecondaryPixels+ " TERTIARY:" + noOfTertiaryPixels + " BORDER:" + noOfBorderPixels + " EMPTY:" + noOfEmptyPixels);
+		
+		if (noOfSecondaryPixels > (noOfFilledPixels / 4)) {
+			result = false;
+			//System.out.println("REJECTED");
+		}
+		
+		if (noOfTertiaryPixels > (noOfFilledPixels / 3)) {
+			result = false;
+			//System.out.println("REJECTED");
+		}	
+		
+		return result;
+	}
+	
+	private Pixel[][] createBaseGrid() {
 
 		Pixel[][] grid = new Pixel[ROWS][COLS];
 		PixelGridUtils.initEmptyGrid(grid, ROWS, COLS);
 
-		Point point = new Point(0, COLS - 1);
+		Point point = new Point(ROWS / 2, COLS - 1);
 
-		for (int i = 0; i < STEPS; i++) {
+		int steps = RandomInt.anyRandomIntRange(5, 50);
+		int subSteps = RandomInt.anyRandomIntRange(5, 100);
+
+		for (int i = 0; i < steps; i++) {
 
 			if (point == null) {
 				// we are passed the first step lets find the lowest most pixel
@@ -40,7 +102,7 @@ public class VesselGeneratorFactory {
 				}
 			}
 
-			for (int y = 0; y < SUB_STEPS; y++) {
+			for (int y = 0; y < subSteps; y++) {
 				// now process points randomly starting with one determined from
 				// above
 				point = processPoint(point, grid);
@@ -48,19 +110,24 @@ public class VesselGeneratorFactory {
 
 			point = null;
 		}
-		
-		for (int i = 0; i < STEPS; i++) {
-			point = getRandomFilledPoint(grid);
-			
-			for (int y = 0; y < SUB_STEPS; y++) {
+
+		return grid;
+	}
+
+	private void addExtras(Pixel[][] grid) {
+
+		int steps = RandomInt.anyRandomIntRange(0, 10);
+		int subSteps = RandomInt.anyRandomIntRange(5, 20);
+
+		for (int i = 0; i < steps; i++) {
+			Point point = PixelGridUtils.getRandomFilledPoint(grid);
+
+			for (int y = 0; y < subSteps; y++) {
 				// now process points randomly starting with one determined from
 				// above
 				point = processPoint(point, grid);
-			}			
+			}
 		}
-		
-
-		return grid;
 	}
 
 	private Point processPoint(Point point, Pixel[][] grid) {
@@ -144,27 +211,5 @@ public class VesselGeneratorFactory {
 		}
 
 		return newPoint;
-	}
-	
-	private Point getRandomFilledPoint(Pixel[][] grid) {
-		
-		Point point = null;
-		
-		while (point == null) {
-			
-			int x = RandomInt.anyRandomIntRange(1, ROWS - 1);
-			int y = RandomInt.anyRandomIntRange(1, COLS - 1);
-			
-			Pixel possiblePixel = grid[x][y];
-			
-			if (possiblePixel.value == Pixel.FILLED) {
-				point = new Point();
-				point.x = x;
-				point.y = y;
-			}
-		}
-		
-		return point;
-		
 	}
 }

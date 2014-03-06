@@ -6,6 +6,9 @@ import java.awt.GraphicsConfiguration;
 import java.awt.GraphicsEnvironment;
 import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
+import java.awt.image.BufferedImageOp;
+import java.awt.image.ConvolveOp;
+import java.awt.image.Kernel;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
@@ -17,8 +20,7 @@ import ajb.random.RandomColor;
 
 public class ImageUtils {
 
-	public static BufferedImage outputToImage(Pixel[][] grid, Color borderColor, Color primaryColor, Color secondaryColor,
-			Color tertiaryColor, Color emptyColor) {
+	public static BufferedImage outputToImage(Pixel[][] grid, Color borderColor, Color primaryColor, Color secondaryColor, Color tertiaryColor, Color emptyColor) {
 
 		GraphicsConfiguration gc = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDefaultConfiguration();
 
@@ -91,12 +93,11 @@ public class ImageUtils {
 		}
 
 		gr.dispose();
-
 		return img;
 	}
 
-	public static BufferedImage outputAllToImage(List<Pixel[][]> grids, int width, int height, Color borderColor, Color primaryColor,
-			Color secondaryColor, Color tertiaryColor, Color emptyColor) {
+	public static BufferedImage outputAllToImage(List<Pixel[][]> grids, int width, int height, Color borderColor, Color primaryColor, Color secondaryColor, Color tertiaryColor,
+			Color emptyColor) {
 
 		GraphicsConfiguration gc = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDefaultConfiguration();
 
