@@ -26,6 +26,7 @@ public class VesselGeneratorFactory {
 		grid = PixelGridUtils.floor(grid);
 		PixelGridUtils.fillEmptySurroundedPixelsInGrid(grid);
 		PixelGridUtils.addNoiseToFlatPixels(grid);
+		PixelGridUtils.setPixelDepth(grid);
 
 		if (validateGrid(grid)) {		
 			return grid;
@@ -82,8 +83,8 @@ public class VesselGeneratorFactory {
 
 		Point point = new Point(ROWS / 2, COLS - 1);
 
-		int steps = RandomInt.anyRandomIntRange(5, 50);
-		int subSteps = RandomInt.anyRandomIntRange(5, 100);
+		int steps = RandomInt.anyRandomIntRange(5, 60);
+		int subSteps = RandomInt.anyRandomIntRange(5, 150);
 
 		for (int i = 0; i < steps; i++) {
 
@@ -116,8 +117,8 @@ public class VesselGeneratorFactory {
 
 	private void addExtras(Pixel[][] grid) {
 
-		int steps = RandomInt.anyRandomIntRange(0, 10);
-		int subSteps = RandomInt.anyRandomIntRange(5, 20);
+		int steps = RandomInt.anyRandomIntRange(0, 20);
+		int subSteps = RandomInt.anyRandomIntRange(5, 30);
 
 		for (int i = 0; i < steps; i++) {
 			Point point = PixelGridUtils.getRandomFilledPoint(grid);

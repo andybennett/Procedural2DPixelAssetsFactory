@@ -71,16 +71,16 @@ public class ImageUtils {
 
 				} else if (grid[r][c].value == Pixel.FILLED) {
 
-					gr.setColor(firstColor);
+					gr.setColor(ColorUtils.lighter(firstColor, grid[r][c].depth * 0.1));
 					gr.fillRect(c * scaleFactor, r * scaleFactor, scaleFactor, scaleFactor);
 
 				} else if (grid[r][c].value == Pixel.SECONDARY) {
 
-					gr.setColor(secondColor);
+					gr.setColor(ColorUtils.lighter(secondColor, grid[r][c].depth * 0.1));
 					gr.fillRect(c * scaleFactor, r * scaleFactor, scaleFactor, scaleFactor);
 				} else if (grid[r][c].value == Pixel.TERTIARY) {
 
-					gr.setColor(thirdColor);
+					gr.setColor(ColorUtils.lighter(thirdColor, grid[r][c].depth * 0.1));
 					gr.fillRect(c * scaleFactor, r * scaleFactor, scaleFactor, scaleFactor);
 				} else if (grid[r][c].value == Pixel.EMPTY) {
 

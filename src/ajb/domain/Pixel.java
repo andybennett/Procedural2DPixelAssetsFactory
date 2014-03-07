@@ -9,5 +9,6 @@ public class Pixel {
 	public static final int TERTIARY = 4;
 
 	public int value = EMPTY;
+	public int depth = 0;
 
 }

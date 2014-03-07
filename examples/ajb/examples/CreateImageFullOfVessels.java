@@ -33,9 +33,9 @@ public class CreateImageFullOfVessels {
 		//Blue - Color.decode("#79ABFF");
 		//Red - Color.decode("#D25252");
 		
-		Color primaryColor = Color.LIGHT_GRAY; // Color.decode("#7FB347");
-		Color secondaryColor = Color.decode("#D25252");
-		Color tertiaryColor = Color.GRAY;
+		Color primaryColor = Color.decode("#2A2A2A");
+		Color secondaryColor = Color.decode("#7FB347");
+		Color tertiaryColor = Color.decode("#7FB347");
 
 		// create image
 		BufferedImage img = ImageUtils.outputAllToImage(grids, 1600, 1600, null, primaryColor, secondaryColor, tertiaryColor, null);
