@@ -83,8 +83,8 @@ public class VesselGeneratorFactory {
 
 		Point point = new Point(ROWS / 2, COLS - 1);
 
-		int steps = RandomInt.anyRandomIntRange(5, 60);
-		int subSteps = RandomInt.anyRandomIntRange(5, 150);
+		int steps = RandomInt.anyRandomIntRange(5, 50);
+		int subSteps = RandomInt.anyRandomIntRange(5, 120);
 
 		for (int i = 0; i < steps; i++) {
 
@@ -118,7 +118,7 @@ public class VesselGeneratorFactory {
 	private void addExtras(Pixel[][] grid) {
 
 		int steps = RandomInt.anyRandomIntRange(0, 20);
-		int subSteps = RandomInt.anyRandomIntRange(5, 30);
+		int subSteps = RandomInt.anyRandomIntRange(5, 50);
 
 		for (int i = 0; i < steps; i++) {
 			Point point = PixelGridUtils.getRandomFilledPoint(grid);
