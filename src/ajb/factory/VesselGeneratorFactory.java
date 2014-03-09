@@ -12,8 +12,8 @@ import ajb.utils.PixelGridUtils;
 
 public class VesselGeneratorFactory {
 
-	private final int ROWS = 500;
-	private final int COLS = 500;
+	private final int ROWS = 600;
+	private final int COLS = 600;
 
 	public Pixel[][] create() {
 
@@ -62,6 +62,11 @@ public class VesselGeneratorFactory {
 		}
 		
 		//System.out.println("FILLED:" + noOfFilledPixels + " SECONDARY:" + noOfSecondaryPixels+ " TERTIARY:" + noOfTertiaryPixels + " BORDER:" + noOfBorderPixels + " EMPTY:" + noOfEmptyPixels);
+		
+		if (noOfSecondaryPixels == 0) {
+			result = false;
+			//System.out.println("REJECTED");
+		}
 		
 		if (noOfSecondaryPixels > (noOfFilledPixels / 4)) {
 			result = false;
