@@ -168,6 +168,32 @@ public class PixelGridUtils {
 
 		return fullGrid;
 	}
+	
+	/**
+	 * Takes the passed in grid and returns a grid that contains the original
+	 * plus a mirrored copy
+	 * 
+	 * @param halfGrid
+	 *            {@link Pixel}[][]
+	 * @return {@link Pixel}[][]
+	 */
+	public static Pixel[][] mirrorCopyGridVertically(Pixel[][] halfGrid) {
+
+		int rows = (halfGrid.length * 2);
+		int cols = halfGrid[0].length;
+
+		Pixel[][] fullGrid = new Pixel[rows][cols];
+
+		// Copy left to right
+		for (int r = 0; r < rows / 2; r++) {
+			for (int c = 0; c < cols; c++) {
+				fullGrid[r][c] = halfGrid[r][c];
+				fullGrid[(rows - 1) - r][c] = halfGrid[r][c];
+			}
+		}
+
+		return fullGrid;
+	}	
 
 	/**
 	 * Takes the passed in grid extends it by 2 then puts a border pixel next to
