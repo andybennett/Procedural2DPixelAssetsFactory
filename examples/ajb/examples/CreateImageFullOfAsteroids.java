@@ -6,17 +6,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ajb.domain.Pixel;
-import ajb.factory.VesselGeneratorFactory;
-import ajb.random.RandomInt;
+import ajb.factory.AsteroidGeneratorFactory;
+import ajb.utils.ColorUtils;
 import ajb.utils.ImageUtils;
-import ajb.utils.PixelGridUtils;
 
-public class CreateImageFullOfVessels {
+public class CreateImageFullOfAsteroids {
 
 	public static void main(String[] args) {
 
 		// get an instance of our vessel factory
-		VesselGeneratorFactory factory = new VesselGeneratorFactory();
+		AsteroidGeneratorFactory factory = new AsteroidGeneratorFactory();
 
 		// list to hold all the vessels we generate
 		List<Pixel[][]> grids = new ArrayList<Pixel[][]>();
@@ -38,7 +37,7 @@ public class CreateImageFullOfVessels {
 		// save image
 		// replace with the path of wherever you want the image to go - if left
 		// as is it will be in the root project folder
-		ImageUtils.save(img, "png", "vessels");
+		ImageUtils.save(img, "png", "asteroids");
 	}
 
 }

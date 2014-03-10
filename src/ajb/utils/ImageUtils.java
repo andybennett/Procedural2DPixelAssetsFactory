@@ -60,16 +60,16 @@ public class ImageUtils {
 		if (secondaryColor != null) {
 			secondColor = secondaryColor;
 		} else {
-			secondColor = RandomColor.anyRandomColor();
+			secondColor = Color.decode(ColorUtils.getRandomColour());
 		}
 
-		Color thirdColor = null;
+		Color thirdColor = secondColor;
 
-		if (tertiaryColor != null) {
-			thirdColor = tertiaryColor;
-		} else {
-			thirdColor = RandomColor.anyRandomColor();
-		}
+//		if (tertiaryColor != null) {
+//			thirdColor = tertiaryColor;
+//		} else {
+//			thirdColor = Color.decode(ColorUtils.getRandomColour());
+//		}
 
 		for (int r = 0; r < grid.length; r++) {
 			for (int c = 0; c < grid[0].length; c++) {

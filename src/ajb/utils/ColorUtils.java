@@ -20,6 +20,8 @@ package ajb.utils;
 
 import java.awt.Color;
 
+import ajb.random.RandomInt;
+
 /**
  * Common color utilities.
  * 
@@ -232,5 +234,22 @@ public class ColorUtils {
 		float b = color.getBlue() / 255.0f;
 
 		return isDark(r, g, b);
+	}
+	
+	public static String getRandomColour() {
+		String blue = "#79ABFF";
+		String red = "#D25252";
+		String green = "#7FB347";
+		String yellow = "#FFC600";
+		String purple = "#D197D9";
+		
+		String[] colours = new String[5];
+		colours[0] = blue;
+		colours[1] = red;
+		colours[2] = green;
+		colours[3] = yellow;
+		colours[4] = purple;				
+		
+		return colours[RandomInt.anyRandomIntRange(0, 4)];
 	}
 }

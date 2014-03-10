@@ -10,7 +10,7 @@ import ajb.enums.NeighbouringPointDirection;
 import ajb.random.RandomInt;
 import ajb.utils.PixelGridUtils;
 
-public class VesselGeneratorFactory {
+public class AsteroidGeneratorFactory {
 
 	private final int ROWS = 600;
 	private final int COLS = 600;
@@ -18,14 +18,10 @@ public class VesselGeneratorFactory {
 	public Pixel[][] create() {
 
 		Pixel[][] grid = createBaseGrid();
-		addExtras(grid);
 
 		grid = PixelGridUtils.floor(grid);
-		grid = PixelGridUtils.mirrorCopyGridHorizontally(grid);
 		grid = PixelGridUtils.addBorders(grid);
-		grid = PixelGridUtils.floor(grid);
 		PixelGridUtils.fillEmptySurroundedPixelsInGrid(grid);
-		PixelGridUtils.addNoiseToFlatPixels(grid);
 		PixelGridUtils.setPixelDepth(grid);
 
 		if (validateGrid(grid)) {		
@@ -86,54 +82,18 @@ public class VesselGeneratorFactory {
 		Pixel[][] grid = new Pixel[ROWS][COLS];
 		PixelGridUtils.initEmptyGrid(grid, ROWS, COLS);
 
-		Point point = new Point(ROWS / 2, COLS - 1);
+		Point point = new Point(ROWS / 2, COLS / 2);
 
-		int steps = RandomInt.anyRandomIntRange(5, 50);
-		int subSteps = RandomInt.anyRandomIntRange(5, 120);
+		int steps = 50;
+		int subSteps = 300;
 
 		for (int i = 0; i < steps; i++) {
-
-			if (point == null) {
-				// we are passed the first step lets find the lowest most pixel
-				// that is closest to the middle, and go again from there...
-
-				// top down
-				for (int x = 0; x < ROWS; x++) {
-					// left to right
-					for (int y = 0; y < COLS; y++) {
-						if (grid[x][y].value == Pixel.FILLED) {
-							point = new Point(x, y);
-						}
-					}
-				}
-			}
-
 			for (int y = 0; y < subSteps; y++) {
-				// now process points randomly starting with one determined from
-				// above
 				point = processPoint(point, grid);
 			}
-
-			point = null;
 		}
 
 		return grid;
-	}
-
-	private void addExtras(Pixel[][] grid) {
-
-		int steps = RandomInt.anyRandomIntRange(0, 20);
-		int subSteps = RandomInt.anyRandomIntRange(5, 50);
-
-		for (int i = 0; i < steps; i++) {
-			Point point = PixelGridUtils.getRandomFilledPoint(grid);
-
-			for (int y = 0; y < subSteps; y++) {
-				// now process points randomly starting with one determined from
-				// above
-				point = processPoint(point, grid);
-			}
-		}
 	}
 
 	private Point processPoint(Point point, Pixel[][] grid) {

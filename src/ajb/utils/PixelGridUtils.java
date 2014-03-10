@@ -3,7 +3,9 @@ package ajb.utils;
 import java.awt.Point;
 import java.util.List;
 
+import ajb.domain.NeighbouringPoint;
 import ajb.domain.Pixel;
+import ajb.enums.NeighbouringPointDirection;
 import ajb.random.RandomInt;
 
 public class PixelGridUtils {
@@ -585,4 +587,78 @@ public class PixelGridUtils {
 			}
 		}
 	}
+	
+	public static NeighbouringPoint getRandomNeighbouringPoint(Point point, Pixel[][] grid) {
+
+		// top
+		NeighbouringPoint pointTop = new NeighbouringPoint(point.x - 1, point.y, NeighbouringPointDirection.TOP);
+
+		// bottom
+		NeighbouringPoint pointBottom = new NeighbouringPoint(point.x + 1, point.y, NeighbouringPointDirection.BOTTOM);
+
+		// left
+		NeighbouringPoint pointLeft = new NeighbouringPoint(point.x, point.y - 1, NeighbouringPointDirection.LEFT);
+
+		// right
+		NeighbouringPoint pointRight = new NeighbouringPoint(point.x, point.y + 1, NeighbouringPointDirection.RIGHT);
+
+		boolean pointTopValid = PixelGridUtils.isPointWithinGrid(pointTop, grid);
+		boolean pointBottomValid = PixelGridUtils.isPointWithinGrid(pointBottom, grid);
+		boolean pointLeftValid = PixelGridUtils.isPointWithinGrid(pointLeft, grid);
+		boolean pointRightValid = PixelGridUtils.isPointWithinGrid(pointRight, grid);
+
+		int noOfValidNeighbours = 0;
+
+		if (pointTopValid) {
+			noOfValidNeighbours++;
+		}
+
+		if (pointBottomValid) {
+			noOfValidNeighbours++;
+		}
+
+		if (pointLeftValid) {
+			noOfValidNeighbours++;
+		}
+
+		if (pointRightValid) {
+			noOfValidNeighbours++;
+		}
+
+		NeighbouringPoint[] neighbours = new NeighbouringPoint[noOfValidNeighbours + 1];
+
+		int index = 0;
+		if (pointTopValid) {
+			neighbours[index] = pointTop;
+			index++;
+		}
+
+		if (pointBottomValid) {
+			neighbours[index] = pointBottom;
+			index++;
+		}
+
+		if (pointLeftValid) {
+			neighbours[index] = pointLeft;
+			index++;
+		}
+
+		if (pointRightValid) {
+			neighbours[index] = pointRight;
+			index++;
+		}
+
+		// go to a random neighbour
+		NeighbouringPoint newPoint = null;
+
+		while (newPoint == null) {
+			int ri = RandomInt.anyRandomIntRange(0, neighbours.length - 1);
+
+			if (neighbours[ri] != null) {
+				newPoint = neighbours[ri];
+			}
+		}
+
+		return newPoint;
+	}	
 }
