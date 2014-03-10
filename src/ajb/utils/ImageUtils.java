@@ -20,8 +20,11 @@ import ajb.random.RandomColor;
 public class ImageUtils {
 
 	public static BufferedImage outputToImage(Pixel[][] grid, Color borderColor, Color primaryColor, Color secondaryColor, Color tertiaryColor, Color emptyColor) {
-		BufferedImage baseImg = createImage(grid, borderColor, primaryColor, secondaryColor, tertiaryColor, emptyColor);
-		BufferedImage layer1Img = createImage(grid, borderColor, primaryColor, secondaryColor, tertiaryColor, emptyColor);
+		
+		Color col = Color.decode(ColorUtils.getRandomColour());
+		
+		BufferedImage baseImg = createImage(grid, borderColor, primaryColor, col, col, emptyColor);
+		BufferedImage layer1Img = createImage(grid, borderColor, primaryColor, col, col, emptyColor);
 		
 		GaussianFilter filter = new GaussianFilter();
 		filter.setRadius(12f);
@@ -47,30 +50,6 @@ public class ImageUtils {
 
 		gr.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-		Color firstColor = null;
-
-		if (primaryColor != null) {
-			firstColor = primaryColor;
-		} else {
-			firstColor = RandomColor.anyRandomColor();
-		}
-
-		Color secondColor = null;
-
-		if (secondaryColor != null) {
-			secondColor = secondaryColor;
-		} else {
-			secondColor = Color.decode(ColorUtils.getRandomColour());
-		}
-
-		Color thirdColor = secondColor;
-
-//		if (tertiaryColor != null) {
-//			thirdColor = tertiaryColor;
-//		} else {
-//			thirdColor = Color.decode(ColorUtils.getRandomColour());
-//		}
-
 		for (int r = 0; r < grid.length; r++) {
 			for (int c = 0; c < grid[0].length; c++) {
 
@@ -86,16 +65,16 @@ public class ImageUtils {
 
 				} else if (grid[r][c].value == Pixel.FILLED) {
 
-					gr.setColor(ColorUtils.lighter(firstColor, grid[r][c].depth * 0.1));
+					gr.setColor(ColorUtils.lighter(primaryColor, grid[r][c].depth * 0.1));
 					gr.fillRect(c * scaleFactor, r * scaleFactor, scaleFactor, scaleFactor);
 
 				} else if (grid[r][c].value == Pixel.SECONDARY) {
 
-					gr.setColor(ColorUtils.lighter(secondColor, grid[r][c].depth * 0.1));
+					gr.setColor(ColorUtils.lighter(secondaryColor, grid[r][c].depth * 0.1));
 					gr.fillRect(c * scaleFactor, r * scaleFactor, scaleFactor, scaleFactor);
 				} else if (grid[r][c].value == Pixel.TERTIARY) {
 
-					gr.setColor(ColorUtils.lighter(thirdColor, grid[r][c].depth * 0.1));
+					gr.setColor(ColorUtils.lighter(tertiaryColor, grid[r][c].depth * 0.1));
 					gr.fillRect(c * scaleFactor, r * scaleFactor, scaleFactor, scaleFactor);
 				} else if (grid[r][c].value == Pixel.EMPTY) {
 

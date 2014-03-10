@@ -85,7 +85,7 @@ public class AsteroidGeneratorFactory {
 		Point point = new Point(ROWS / 2, COLS / 2);
 
 		int steps = 50;
-		int subSteps = 300;
+		int subSteps = 200;
 
 		for (int i = 0; i < steps; i++) {
 			for (int y = 0; y < subSteps; y++) {
