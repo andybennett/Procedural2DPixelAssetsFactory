@@ -210,7 +210,9 @@ public class PixelGridUtils {
 
 		for (int r = 0; r < gridWithBorders.length; r++) {
 			for (int c = 0; c < gridWithBorders[0].length; c++) {
-				if (gridWithBorders[r][c].value == Pixel.FILLED) {
+				if (gridWithBorders[r][c].value == Pixel.FILLED ||
+						gridWithBorders[r][c].value == Pixel.SECONDARY ||
+						gridWithBorders[r][c].value == Pixel.TERTIARY) {
 
 					// Top
 					if (gridWithBorders[r == 0 ? 0 : r - 1][c].value != Pixel.FILLED) {

@@ -26,8 +26,8 @@ public class StationGeneratorFactory {
 		grid = PixelGridUtils.addBorders(grid);
 		grid = PixelGridUtils.floor(grid);
 		PixelGridUtils.fillEmptySurroundedPixelsInGrid(grid);
-		//PixelGridUtils.addNoiseToFlatPixels(grid);
-		PixelGridUtils.setPixelDepth(grid);
+		PixelGridUtils.addNoiseToFlatPixels(grid);			
+		PixelGridUtils.setPixelDepth(grid);		
 
 		if (validateGrid(grid)) {		
 			return grid;
@@ -69,15 +69,15 @@ public class StationGeneratorFactory {
 //			//System.out.println("REJECTED");
 //		}
 //		
-//		if (noOfSecondaryPixels > (noOfFilledPixels / 4)) {
-//			result = false;
-//			//System.out.println("REJECTED");
-//		}
-//		
-//		if (noOfTertiaryPixels > (noOfFilledPixels / 3)) {
-//			result = false;
-//			//System.out.println("REJECTED");
-//		}	
+		if (noOfSecondaryPixels > (noOfFilledPixels / 4)) {
+			result = false;
+			//System.out.println("REJECTED");
+		}
+		
+		if (noOfTertiaryPixels > (noOfFilledPixels / 4)) {
+			result = false;
+			//System.out.println("REJECTED");
+		}	
 		
 		return result;
 	}
@@ -89,15 +89,12 @@ public class StationGeneratorFactory {
 
 		Point point = new Point(ROWS -1, COLS - 1);
 
-		int steps = RandomInt.anyRandomIntRange(5, 50);
-		int subSteps = RandomInt.anyRandomIntRange(5, 120);
+		int steps = RandomInt.anyRandomIntRange(20, 30);
+		int subSteps = RandomInt.anyRandomIntRange(50, 80);
 
 		for (int i = 0; i < steps; i++) {
 
 			if (point == null) {
-				// we are passed the first step lets find the highest most pixel
-				// that is closest to the middle, and go again from there...
-
 				// down top
 				for (int x = ROWS - 1; x > 0; x--) {
 					// left to right
@@ -110,8 +107,6 @@ public class StationGeneratorFactory {
 			}
 
 			for (int y = 0; y < subSteps; y++) {
-				// now process points randomly starting with one determined from
-				// above
 				point = processPoint(point, grid);
 			}
 
@@ -123,15 +118,13 @@ public class StationGeneratorFactory {
 
 	private void addExtras(Pixel[][] grid) {
 
-		int steps = RandomInt.anyRandomIntRange(0, 20);
-		int subSteps = RandomInt.anyRandomIntRange(5, 50);
+		int steps = RandomInt.anyRandomIntRange(20, 20);
+		int subSteps = RandomInt.anyRandomIntRange(50, 50);
 
 		for (int i = 0; i < steps; i++) {
-			Point point = PixelGridUtils.getRandomFilledPoint(grid);
+			Point point = new Point(ROWS -1, COLS - 1);
 
 			for (int y = 0; y < subSteps; y++) {
-				// now process points randomly starting with one determined from
-				// above
 				point = processPoint(point, grid);
 			}
 		}

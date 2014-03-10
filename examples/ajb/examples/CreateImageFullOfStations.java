@@ -20,7 +20,7 @@ public class CreateImageFullOfStations {
 		List<Pixel[][]> grids = new ArrayList<Pixel[][]>();
 
 		// create X stations and add to our list
-		for (int i = 0; i < 10; i++) {
+		for (int i = 0; i < 15; i++) {
 
 			Pixel[][] grid = factory.create();
 

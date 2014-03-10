@@ -25,7 +25,7 @@ public class VesselGeneratorFactory {
 		grid = PixelGridUtils.addBorders(grid);
 		grid = PixelGridUtils.floor(grid);
 		PixelGridUtils.fillEmptySurroundedPixelsInGrid(grid);
-		PixelGridUtils.addNoiseToFlatPixels(grid);
+		PixelGridUtils.addNoiseToFlatPixels(grid);	
 		PixelGridUtils.setPixelDepth(grid);
 
 		if (validateGrid(grid)) {		
@@ -140,6 +140,39 @@ public class VesselGeneratorFactory {
 
 		if (grid[point.x][point.y].value == Pixel.EMPTY) {
 			grid[point.x][point.y].value = Pixel.FILLED;
+			
+			// top
+			NeighbouringPoint pointTop = new NeighbouringPoint(point.x - 1, point.y, NeighbouringPointDirection.TOP);
+
+			// bottom
+			NeighbouringPoint pointBottom = new NeighbouringPoint(point.x + 1, point.y, NeighbouringPointDirection.BOTTOM);
+
+			// left
+			NeighbouringPoint pointLeft = new NeighbouringPoint(point.x, point.y - 1, NeighbouringPointDirection.LEFT);
+
+			// right
+			NeighbouringPoint pointRight = new NeighbouringPoint(point.x, point.y + 1, NeighbouringPointDirection.RIGHT);
+
+			boolean pointTopValid = PixelGridUtils.isPointWithinGrid(pointTop, grid);
+			boolean pointBottomValid = PixelGridUtils.isPointWithinGrid(pointBottom, grid);
+			boolean pointLeftValid = PixelGridUtils.isPointWithinGrid(pointLeft, grid);
+			boolean pointRightValid = PixelGridUtils.isPointWithinGrid(pointRight, grid);
+			
+			if (pointTopValid) {
+				grid[point.x - 1][point.y].value = Pixel.FILLED;
+			}
+			
+			if (pointBottomValid) {
+				grid[point.x + 1][point.y].value = Pixel.FILLED;
+			}
+			
+			if (pointLeftValid) {
+				grid[point.x][point.y - 1].value = Pixel.FILLED;
+			}
+			
+			if (pointRightValid) {
+				grid[point.x][point.y + 1].value = Pixel.FILLED;
+			}			
 		}
 
 		return PixelGridUtils.getRandomNeighbouringPoint(point, grid);

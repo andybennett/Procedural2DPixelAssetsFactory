@@ -21,7 +21,8 @@ public class AsteroidGeneratorFactory {
 
 		grid = PixelGridUtils.floor(grid);
 		grid = PixelGridUtils.addBorders(grid);
-		PixelGridUtils.fillEmptySurroundedPixelsInGrid(grid);
+		grid = PixelGridUtils.floor(grid);
+		PixelGridUtils.fillEmptySurroundedPixelsInGrid(grid);		
 		PixelGridUtils.setPixelDepth(grid);
 
 		if (validateGrid(grid)) {		

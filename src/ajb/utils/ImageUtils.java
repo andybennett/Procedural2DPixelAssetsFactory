@@ -32,7 +32,7 @@ public class ImageUtils {
 		
 		BufferedImage result = blend(baseImg, layer1Img);
 
-		filter.setRadius(1f);
+		filter.setRadius(1.5f);
 		result = filter.filter(result, null);
 		
 		return result;
@@ -65,16 +65,16 @@ public class ImageUtils {
 
 				} else if (grid[r][c].value == Pixel.FILLED) {
 
-					gr.setColor(ColorUtils.lighter(primaryColor, grid[r][c].depth * 0.1));
+					gr.setColor(ColorUtils.lighter(primaryColor, grid[r][c].depth * 0.05 > 6 ? 8 : grid[r][c].depth * 0.05));
 					gr.fillRect(c * scaleFactor, r * scaleFactor, scaleFactor, scaleFactor);
 
 				} else if (grid[r][c].value == Pixel.SECONDARY) {
 
-					gr.setColor(ColorUtils.lighter(secondaryColor, grid[r][c].depth * 0.1));
+					gr.setColor(ColorUtils.lighter(secondaryColor, grid[r][c].depth * 0.05));
 					gr.fillRect(c * scaleFactor, r * scaleFactor, scaleFactor, scaleFactor);
 				} else if (grid[r][c].value == Pixel.TERTIARY) {
 
-					gr.setColor(ColorUtils.lighter(tertiaryColor, grid[r][c].depth * 0.1));
+					gr.setColor(ColorUtils.lighter(tertiaryColor, grid[r][c].depth * 0.05));
 					gr.fillRect(c * scaleFactor, r * scaleFactor, scaleFactor, scaleFactor);
 				} else if (grid[r][c].value == Pixel.EMPTY) {
 
