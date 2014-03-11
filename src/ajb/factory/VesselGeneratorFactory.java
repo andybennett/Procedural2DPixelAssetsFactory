@@ -1,12 +1,8 @@
 package ajb.factory;
 
 import java.awt.Point;
-import java.util.ArrayList;
-import java.util.List;
 
-import ajb.domain.NeighbouringPoint;
 import ajb.domain.Pixel;
-import ajb.enums.NeighbouringPointDirection;
 import ajb.random.RandomInt;
 import ajb.utils.PixelGridUtils;
 
@@ -41,9 +37,6 @@ public class VesselGeneratorFactory {
 		
 		int noOfFilledPixels = 0;
 		int noOfSecondaryPixels = 0;
-		int noOfTertiaryPixels = 0;
-		int noOfBorderPixels = 0;
-		int noOfEmptyPixels = 0;
 		
 		for (int x = 0; x < grid.length; x++) {
 			for (int y = 0; y < grid[0].length; y++) {
@@ -51,31 +44,16 @@ public class VesselGeneratorFactory {
 					noOfFilledPixels++;
 				} else if (grid[x][y].value == Pixel.SECONDARY) {
 					noOfSecondaryPixels++;
-				} else if (grid[x][y].value == Pixel.TERTIARY) {
-					noOfTertiaryPixels++;
-				} else if (grid[x][y].value == Pixel.BORDER) {
-					noOfBorderPixels++;
-				} else if (grid[x][y].value == Pixel.EMPTY) {
-					noOfEmptyPixels++;
 				}
 			}
 		}
-		
-		//System.out.println("FILLED:" + noOfFilledPixels + " SECONDARY:" + noOfSecondaryPixels+ " TERTIARY:" + noOfTertiaryPixels + " BORDER:" + noOfBorderPixels + " EMPTY:" + noOfEmptyPixels);
-		
+
 		if (noOfSecondaryPixels == 0) {
 			result = false;
-			//System.out.println("REJECTED");
 		}
 		
 		if (noOfSecondaryPixels > (noOfFilledPixels / 4)) {
 			result = false;
-			//System.out.println("REJECTED");
-		}
-		
-		if (noOfTertiaryPixels > (noOfFilledPixels / 3)) {
-			result = false;
-			//System.out.println("REJECTED");
 		}	
 		
 		return result;
@@ -109,8 +87,6 @@ public class VesselGeneratorFactory {
 			}
 
 			for (int y = 0; y < subSteps; y++) {
-				// now process points randomly starting with one determined from
-				// above
 				point = processPoint(point, grid);
 			}
 
@@ -129,8 +105,6 @@ public class VesselGeneratorFactory {
 			Point point = PixelGridUtils.getRandomFilledPoint(grid);
 
 			for (int y = 0; y < subSteps; y++) {
-				// now process points randomly starting with one determined from
-				// above
 				point = processPoint(point, grid);
 			}
 		}
@@ -139,42 +113,9 @@ public class VesselGeneratorFactory {
 	private Point processPoint(Point point, Pixel[][] grid) {
 
 		if (grid[point.x][point.y].value == Pixel.EMPTY) {
-			grid[point.x][point.y].value = Pixel.FILLED;
-			
-			// top
-			NeighbouringPoint pointTop = new NeighbouringPoint(point.x - 1, point.y, NeighbouringPointDirection.TOP);
-
-			// bottom
-			NeighbouringPoint pointBottom = new NeighbouringPoint(point.x + 1, point.y, NeighbouringPointDirection.BOTTOM);
-
-			// left
-			NeighbouringPoint pointLeft = new NeighbouringPoint(point.x, point.y - 1, NeighbouringPointDirection.LEFT);
-
-			// right
-			NeighbouringPoint pointRight = new NeighbouringPoint(point.x, point.y + 1, NeighbouringPointDirection.RIGHT);
-
-			boolean pointTopValid = PixelGridUtils.isPointWithinGrid(pointTop, grid);
-			boolean pointBottomValid = PixelGridUtils.isPointWithinGrid(pointBottom, grid);
-			boolean pointLeftValid = PixelGridUtils.isPointWithinGrid(pointLeft, grid);
-			boolean pointRightValid = PixelGridUtils.isPointWithinGrid(pointRight, grid);
-			
-			if (pointTopValid) {
-				grid[point.x - 1][point.y].value = Pixel.FILLED;
-			}
-			
-			if (pointBottomValid) {
-				grid[point.x + 1][point.y].value = Pixel.FILLED;
-			}
-			
-			if (pointLeftValid) {
-				grid[point.x][point.y - 1].value = Pixel.FILLED;
-			}
-			
-			if (pointRightValid) {
-				grid[point.x][point.y + 1].value = Pixel.FILLED;
-			}			
+			grid[point.x][point.y].value = Pixel.FILLED;			
 		}
 
-		return PixelGridUtils.getRandomNeighbouringPoint(point, grid);
+		return PixelGridUtils.getRandomAdjacentPoint(point, grid);
 	}
 }

@@ -3,9 +3,7 @@ package ajb.utils;
 import java.awt.Point;
 import java.util.List;
 
-import ajb.domain.NeighbouringPoint;
 import ajb.domain.Pixel;
-import ajb.enums.NeighbouringPointDirection;
 import ajb.random.RandomInt;
 
 public class PixelGridUtils {
@@ -211,8 +209,7 @@ public class PixelGridUtils {
 		for (int r = 0; r < gridWithBorders.length; r++) {
 			for (int c = 0; c < gridWithBorders[0].length; c++) {
 				if (gridWithBorders[r][c].value == Pixel.FILLED ||
-						gridWithBorders[r][c].value == Pixel.SECONDARY ||
-						gridWithBorders[r][c].value == Pixel.TERTIARY) {
+						gridWithBorders[r][c].value == Pixel.SECONDARY) {
 
 					// Top
 					if (gridWithBorders[r == 0 ? 0 : r - 1][c].value != Pixel.FILLED) {
@@ -282,32 +279,68 @@ public class PixelGridUtils {
 					boolean filledPixelOnTheLeft = false;
 					boolean filledPixelOnTheRight = false;
 
-					for (int r1 = r - 1; r1 > 0; r1--) {
+					int steps = 0;
+					
+					for (int r1 = r - 1; r1 > 0; r1--) {	
+						
+						if (steps > 50) {
+							break;
+						}
+						
 						if (grid[r1][c].value == Pixel.FILLED) {
 							filledPixelAbove = true;
 							break;
 						}
+						
+						steps++;
 					}
 
+					steps = 0;
+					
 					for (int r1 = r + 1; r1 < grid.length; r1++) {
+						
+						if (steps > 50) {
+							break;
+						}						
+						
 						if (grid[r1][c].value == Pixel.FILLED) {
 							filledPixelBelow = true;
 							break;
 						}
+						
+						steps++;
 					}
 
+					steps = 0;
+					
 					for (int c1 = c - 1; c1 > 0; c1--) {
+						
+						if (steps > 50) {
+							break;
+						}						
+						
 						if (grid[r][c1].value == Pixel.FILLED) {
 							filledPixelOnTheLeft = true;
 							break;
 						}
+						
+						steps++;
 					}
 
+					steps = 0;
+					
 					for (int c1 = c + 1; c1 < grid[0].length; c1++) {
+						
+						if (steps > 50) {
+							break;
+						}						
+						
 						if (grid[r][c1].value == Pixel.FILLED) {
 							filledPixelOnTheRight = true;
 							break;
 						}
+						
+						steps++;
 					}
 
 					if (filledPixelAbove && filledPixelBelow && filledPixelOnTheLeft && filledPixelOnTheRight) {
@@ -381,7 +414,7 @@ public class PixelGridUtils {
 
 					if (filledPixelAbove && filledPixelBelow && filledPixelOnTheLeft && filledPixelOnTheRight) {
 
-						grid[r][c].value = Pixel.TERTIARY;
+						grid[r][c].value = Pixel.SECONDARY;
 
 						int random = RandomInt.anyRandomIntRange(1, 100);
 
@@ -424,7 +457,7 @@ public class PixelGridUtils {
 
 		Point targetPoint = null;
 
-		while (targetPoint == null || attempts < 10) {
+		while (targetPoint == null && attempts < 10) {
 
 			Point potentialPoint = getRandomFilledPoint(targetGrid);
 			potentialPoint.x = potentialPoint.x - sourceGrid.length - 1;
@@ -616,19 +649,19 @@ public class PixelGridUtils {
 		}
 	}
 	
-	public static NeighbouringPoint getRandomNeighbouringPoint(Point point, Pixel[][] grid) {
+	public static Point getRandomAdjacentPoint(Point point, Pixel[][] grid) {
 
 		// top
-		NeighbouringPoint pointTop = new NeighbouringPoint(point.x - 1, point.y, NeighbouringPointDirection.TOP);
+		Point pointTop = new Point(point.x - 1, point.y);
 
 		// bottom
-		NeighbouringPoint pointBottom = new NeighbouringPoint(point.x + 1, point.y, NeighbouringPointDirection.BOTTOM);
+		Point pointBottom = new Point(point.x + 1, point.y);
 
 		// left
-		NeighbouringPoint pointLeft = new NeighbouringPoint(point.x, point.y - 1, NeighbouringPointDirection.LEFT);
+		Point pointLeft = new Point(point.x, point.y - 1);
 
 		// right
-		NeighbouringPoint pointRight = new NeighbouringPoint(point.x, point.y + 1, NeighbouringPointDirection.RIGHT);
+		Point pointRight = new Point(point.x, point.y + 1);
 
 		boolean pointTopValid = PixelGridUtils.isPointWithinGrid(pointTop, grid);
 		boolean pointBottomValid = PixelGridUtils.isPointWithinGrid(pointBottom, grid);
@@ -653,7 +686,7 @@ public class PixelGridUtils {
 			noOfValidNeighbours++;
 		}
 
-		NeighbouringPoint[] neighbours = new NeighbouringPoint[noOfValidNeighbours + 1];
+		Point[] neighbours = new Point[noOfValidNeighbours + 1];
 
 		int index = 0;
 		if (pointTopValid) {
@@ -677,7 +710,7 @@ public class PixelGridUtils {
 		}
 
 		// go to a random neighbour
-		NeighbouringPoint newPoint = null;
+		Point newPoint = null;
 
 		while (newPoint == null) {
 			int ri = RandomInt.anyRandomIntRange(0, neighbours.length - 1);

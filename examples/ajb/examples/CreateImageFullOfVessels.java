@@ -7,9 +7,7 @@ import java.util.List;
 
 import ajb.domain.Pixel;
 import ajb.factory.VesselGeneratorFactory;
-import ajb.random.RandomInt;
 import ajb.utils.ImageUtils;
-import ajb.utils.PixelGridUtils;
 
 public class CreateImageFullOfVessels {
 
@@ -22,7 +20,7 @@ public class CreateImageFullOfVessels {
 		List<Pixel[][]> grids = new ArrayList<Pixel[][]>();
 
 		// create X vessels and add to our list
-		for (int i = 0; i < 200; i++) {
+		for (int i = 0; i < 100; i++) {
 
 			Pixel[][] grid = factory.create();
 
@@ -33,7 +31,7 @@ public class CreateImageFullOfVessels {
 		Color primaryColor = Color.decode("#2A2A2A");
 
 		// create image
-		BufferedImage img = ImageUtils.outputAllToImage(grids, 1000, 1000, null, primaryColor, null, null, null);
+		BufferedImage img = ImageUtils.outputAllToImage(grids, 1000, 1000, null, primaryColor, null);
 
 		// save image
 		// replace with the path of wherever you want the image to go - if left

@@ -19,12 +19,14 @@ import ajb.random.RandomColor;
 
 public class ImageUtils {
 
-	public static BufferedImage outputToImage(Pixel[][] grid, Color borderColor, Color primaryColor, Color secondaryColor, Color tertiaryColor, Color emptyColor) {
+	public static BufferedImage outputToImage(Pixel[][] grid, Color borderColor, Color primaryColor, Color secondaryColor) {
 		
-		Color col = Color.decode(ColorUtils.getRandomColour());
+		if (secondaryColor == null) {
+			secondaryColor = Color.decode(ColorUtils.getRandomColour());
+		}
 		
-		BufferedImage baseImg = createImage(grid, borderColor, primaryColor, col, col, emptyColor);
-		BufferedImage layer1Img = createImage(grid, borderColor, primaryColor, col, col, emptyColor);
+		BufferedImage baseImg = createImage(grid, borderColor, primaryColor, secondaryColor);
+		BufferedImage layer1Img = createImage(grid, borderColor, primaryColor, secondaryColor);
 		
 		GaussianFilter filter = new GaussianFilter();
 		filter.setRadius(12f);
@@ -32,13 +34,13 @@ public class ImageUtils {
 		
 		BufferedImage result = blend(baseImg, layer1Img);
 
-		filter.setRadius(1.5f);
+		filter.setRadius(1.2f);
 		result = filter.filter(result, null);
 		
 		return result;
 	}
 	
-	public static BufferedImage createImage(Pixel[][] grid, Color borderColor, Color primaryColor, Color secondaryColor, Color tertiaryColor, Color emptyColor) {
+	public static BufferedImage createImage(Pixel[][] grid, Color borderColor, Color primaryColor, Color secondaryColor) {
 
 		GraphicsConfiguration gc = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDefaultConfiguration();
 
@@ -65,23 +67,13 @@ public class ImageUtils {
 
 				} else if (grid[r][c].value == Pixel.FILLED) {
 
-					gr.setColor(ColorUtils.lighter(primaryColor, grid[r][c].depth * 0.05 > 6 ? 8 : grid[r][c].depth * 0.05));
+					gr.setColor(ColorUtils.lighter(primaryColor, grid[r][c].depth * 0.05 > 6 ? 6 : grid[r][c].depth * 0.05));
 					gr.fillRect(c * scaleFactor, r * scaleFactor, scaleFactor, scaleFactor);
 
 				} else if (grid[r][c].value == Pixel.SECONDARY) {
 
 					gr.setColor(ColorUtils.lighter(secondaryColor, grid[r][c].depth * 0.05));
 					gr.fillRect(c * scaleFactor, r * scaleFactor, scaleFactor, scaleFactor);
-				} else if (grid[r][c].value == Pixel.TERTIARY) {
-
-					gr.setColor(ColorUtils.lighter(tertiaryColor, grid[r][c].depth * 0.05));
-					gr.fillRect(c * scaleFactor, r * scaleFactor, scaleFactor, scaleFactor);
-				} else if (grid[r][c].value == Pixel.EMPTY) {
-
-					if (emptyColor != null) {
-						gr.setColor(emptyColor);
-						gr.fillRect(c * scaleFactor, r * scaleFactor, scaleFactor, scaleFactor);
-					}
 				}
 			}
 		}
@@ -91,8 +83,7 @@ public class ImageUtils {
 		return img;
 	}
 
-	public static BufferedImage outputAllToImage(List<Pixel[][]> grids, int width, int height, Color borderColor, Color primaryColor, Color secondaryColor, Color tertiaryColor,
-			Color emptyColor) {
+	public static BufferedImage outputAllToImage(List<Pixel[][]> grids, int width, int height, Color borderColor, Color primaryColor, Color secondaryColor) {
 
 		GraphicsConfiguration gc = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDefaultConfiguration();
 
@@ -112,7 +103,7 @@ public class ImageUtils {
 
 		for (Pixel[][] grid : grids) {
 
-			BufferedImage vesselImg = outputToImage(grid, borderColor, primaryColor, secondaryColor, tertiaryColor, emptyColor);
+			BufferedImage vesselImg = outputToImage(grid, borderColor, primaryColor, secondaryColor);
 
 			if (x + (vesselImg.getWidth() + 10) > width) {
 				x = 10;
@@ -182,11 +173,7 @@ public class ImageUtils {
 		
 		Graphics2D gr = (Graphics2D) img.getGraphics();
 
-		gr.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-
-		// Fill background
-		gr.setColor(Color.decode("#1E1E1E"));
-		gr.fillRect(0, 0, width, height);	
+		gr.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);	
 		
 		Composite oldcomp = gr.getComposite();
 		// draw first image fully opaque

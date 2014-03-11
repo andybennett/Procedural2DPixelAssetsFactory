@@ -31,7 +31,7 @@ public class CreateImageFullOfStations {
 		Color primaryColor = Color.decode("#2A2A2A");
 
 		// create image
-		BufferedImage img = ImageUtils.outputAllToImage(grids, 1000, 1000, null, primaryColor, null, null, null);
+		BufferedImage img = ImageUtils.outputAllToImage(grids, 1000, 1000, null, primaryColor, null);
 
 		// save image
 		// replace with the path of wherever you want the image to go - if left
