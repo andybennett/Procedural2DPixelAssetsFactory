@@ -20,7 +20,7 @@ public class CreateImageFullOfStations {
 		List<Pixel[][]> grids = new ArrayList<Pixel[][]>();
 
 		// create X stations and add to our list
-		for (int i = 0; i < 15; i++) {
+		for (int i = 0; i < 70; i++) {
 
 			Pixel[][] grid = factory.create();
 
@@ -31,7 +31,7 @@ public class CreateImageFullOfStations {
 		Color primaryColor = Color.decode("#2A2A2A");
 
 		// create image
-		BufferedImage img = ImageUtils.outputAllToImage(grids, 1000, 1000, null, primaryColor, null);
+		BufferedImage img = ImageUtils.outputAllToImage(grids, 800, 800, primaryColor, null);
 
 		// save image
 		// replace with the path of wherever you want the image to go - if left

@@ -7,8 +7,8 @@ import ajb.utils.PixelGridUtils;
 
 public class AsteroidGeneratorFactory {
 
-	private final int ROWS = 600;
-	private final int COLS = 600;
+	private final int ROWS = 300;
+	private final int COLS = 300;
 
 	public Pixel[][] create() {
 
@@ -49,7 +49,11 @@ public class AsteroidGeneratorFactory {
 		
 		if (noOfSecondaryPixels > (noOfFilledPixels / 4)) {
 			result = false;
-		}	
+		}
+		
+		if (grid.length > 100 || grid[0].length > 100) {
+			result = false;
+		}
 		
 		return result;
 	}
@@ -61,7 +65,7 @@ public class AsteroidGeneratorFactory {
 
 		Point point = new Point(ROWS / 2, COLS / 2);
 
-		int steps = 200;
+		int steps = 100;
 		int subSteps = 100;
 
 		for (int i = 0; i < steps; i++) {

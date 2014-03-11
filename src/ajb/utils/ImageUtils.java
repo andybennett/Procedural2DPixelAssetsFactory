@@ -19,14 +19,14 @@ import ajb.random.RandomColor;
 
 public class ImageUtils {
 
-	public static BufferedImage outputToImage(Pixel[][] grid, Color borderColor, Color primaryColor, Color secondaryColor) {
+	public static BufferedImage outputToImage(Pixel[][] grid, Color primaryColor, Color secondaryColor) {
 		
 		if (secondaryColor == null) {
 			secondaryColor = Color.decode(ColorUtils.getRandomColour());
 		}
 		
-		BufferedImage baseImg = createImage(grid, borderColor, primaryColor, secondaryColor);
-		BufferedImage layer1Img = createImage(grid, borderColor, primaryColor, secondaryColor);
+		BufferedImage baseImg = createImage(grid, primaryColor, secondaryColor);
+		BufferedImage layer1Img = createImage(grid, primaryColor, secondaryColor);
 		
 		GaussianFilter filter = new GaussianFilter();
 		filter.setRadius(12f);
@@ -40,7 +40,7 @@ public class ImageUtils {
 		return result;
 	}
 	
-	public static BufferedImage createImage(Pixel[][] grid, Color borderColor, Color primaryColor, Color secondaryColor) {
+	public static BufferedImage createImage(Pixel[][] grid, Color primaryColor, Color secondaryColor) {
 
 		GraphicsConfiguration gc = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDefaultConfiguration();
 
@@ -56,18 +56,13 @@ public class ImageUtils {
 			for (int c = 0; c < grid[0].length; c++) {
 
 				if (grid[r][c].value == Pixel.BORDER) {
-
-					if (borderColor == null) {
-						gr.setColor(Color.BLACK);
-					} else {
-						gr.setColor(borderColor);
-					}
-
+					
+					gr.setColor(Color.BLACK);
 					gr.fillRect(c * scaleFactor, r * scaleFactor, scaleFactor, scaleFactor);
 
 				} else if (grid[r][c].value == Pixel.FILLED) {
 
-					gr.setColor(ColorUtils.lighter(primaryColor, grid[r][c].depth * 0.05 > 6 ? 6 : grid[r][c].depth * 0.05));
+					gr.setColor(ColorUtils.lighter(primaryColor, grid[r][c].depth * 0.05 > 3 ? 3 : grid[r][c].depth * 0.05));
 					gr.fillRect(c * scaleFactor, r * scaleFactor, scaleFactor, scaleFactor);
 
 				} else if (grid[r][c].value == Pixel.SECONDARY) {
@@ -83,7 +78,7 @@ public class ImageUtils {
 		return img;
 	}
 
-	public static BufferedImage outputAllToImage(List<Pixel[][]> grids, int width, int height, Color borderColor, Color primaryColor, Color secondaryColor) {
+	public static BufferedImage outputAllToImage(List<Pixel[][]> grids, int width, int height, Color primaryColor, Color secondaryColor) {
 
 		GraphicsConfiguration gc = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDefaultConfiguration();
 
@@ -103,7 +98,7 @@ public class ImageUtils {
 
 		for (Pixel[][] grid : grids) {
 
-			BufferedImage vesselImg = outputToImage(grid, borderColor, primaryColor, secondaryColor);
+			BufferedImage vesselImg = outputToImage(grid, primaryColor, secondaryColor);
 
 			if (x + (vesselImg.getWidth() + 10) > width) {
 				x = 10;

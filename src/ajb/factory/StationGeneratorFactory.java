@@ -8,13 +8,12 @@ import ajb.utils.PixelGridUtils;
 
 public class StationGeneratorFactory {
 
-	private final int ROWS = 600;
-	private final int COLS = 600;
+	private final int ROWS = 300;
+	private final int COLS = 300;
 
 	public Pixel[][] create() {
 
 		Pixel[][] grid = createBaseGrid();
-		addExtras(grid);
 
 		grid = PixelGridUtils.floor(grid);
 		grid = PixelGridUtils.mirrorCopyGridHorizontally(grid);
@@ -49,6 +48,10 @@ public class StationGeneratorFactory {
 			}
 		}
 
+		if (noOfSecondaryPixels == 0) {
+			return false;
+		}
+		
 		if (noOfSecondaryPixels > (noOfFilledPixels / 4)) {
 			result = false;
 		}	
@@ -63,8 +66,8 @@ public class StationGeneratorFactory {
 
 		Point point = new Point(ROWS -1, COLS - 1);
 
-		int steps = RandomInt.anyRandomIntRange(20, 30);
-		int subSteps = RandomInt.anyRandomIntRange(50, 80);
+		int steps = RandomInt.anyRandomIntRange(5, 20);
+		int subSteps = RandomInt.anyRandomIntRange(5, 50);
 
 		for (int i = 0; i < steps; i++) {
 
@@ -88,20 +91,6 @@ public class StationGeneratorFactory {
 		}
 
 		return grid;
-	}
-
-	private void addExtras(Pixel[][] grid) {
-
-		int steps = RandomInt.anyRandomIntRange(20, 20);
-		int subSteps = RandomInt.anyRandomIntRange(50, 50);
-
-		for (int i = 0; i < steps; i++) {
-			Point point = new Point(ROWS -1, COLS - 1);
-
-			for (int y = 0; y < subSteps; y++) {
-				point = processPoint(point, grid);
-			}
-		}
 	}
 
 	private Point processPoint(Point point, Pixel[][] grid) {
