@@ -279,68 +279,40 @@ public class PixelGridUtils {
 					boolean filledPixelOnTheLeft = false;
 					boolean filledPixelOnTheRight = false;
 
-					int steps = 0;
-					
 					for (int r1 = r - 1; r1 > 0; r1--) {	
-						
-						if (steps > 50) {
-							break;
-						}
-						
+
 						if (grid[r1][c].value == Pixel.FILLED) {
 							filledPixelAbove = true;
 							break;
 						}
-						
-						steps++;
+
 					}
 
-					steps = 0;
-					
 					for (int r1 = r + 1; r1 < grid.length; r1++) {
-						
-						if (steps > 50) {
-							break;
-						}						
-						
+
 						if (grid[r1][c].value == Pixel.FILLED) {
 							filledPixelBelow = true;
 							break;
 						}
-						
-						steps++;
+
 					}
 
-					steps = 0;
-					
 					for (int c1 = c - 1; c1 > 0; c1--) {
-						
-						if (steps > 50) {
-							break;
-						}						
-						
+
 						if (grid[r][c1].value == Pixel.FILLED) {
 							filledPixelOnTheLeft = true;
 							break;
 						}
-						
-						steps++;
+
 					}
 
-					steps = 0;
-					
 					for (int c1 = c + 1; c1 < grid[0].length; c1++) {
-						
-						if (steps > 50) {
-							break;
-						}						
 						
 						if (grid[r][c1].value == Pixel.FILLED) {
 							filledPixelOnTheRight = true;
 							break;
 						}
 						
-						steps++;
 					}
 
 					if (filledPixelAbove && filledPixelBelow && filledPixelOnTheLeft && filledPixelOnTheRight) {
