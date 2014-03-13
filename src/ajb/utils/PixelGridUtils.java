@@ -204,37 +204,40 @@ public class PixelGridUtils {
 	 */
 	public static Pixel[][] addBorders(Pixel[][] grid) {
 
-		Pixel[][] gridWithBorders = PixelGridUtils.extendGrid(grid, 2);
+		Pixel[][] result = PixelGridUtils.extendGrid(grid, 2);		
 
-		for (int r = 0; r < gridWithBorders.length; r++) {
-			for (int c = 0; c < gridWithBorders[0].length; c++) {
-				if (gridWithBorders[r][c].value == Pixel.FILLED ||
-						gridWithBorders[r][c].value == Pixel.SECONDARY) {
+		for (int r = 0; r < result.length; r++) {
+			for (int c = 0; c < result[0].length; c++) {
+				if (result[r][c].value == Pixel.FILLED) {
 
 					// Top
-					if (gridWithBorders[r == 0 ? 0 : r - 1][c].value != Pixel.FILLED) {
-						gridWithBorders[r == 0 ? 0 : r - 1][c].value = Pixel.BORDER;
+					if (result[r == 0 ? 0 : r - 1][c].value != Pixel.FILLED && 
+							result[r == 0 ? 0 : r - 1][c].value != Pixel.SECONDARY) {
+						result[r == 0 ? 0 : r - 1][c].value = Pixel.BORDER;
 					}
 
 					// Left
-					if (gridWithBorders[r][c == 0 ? 0 : c - 1].value != Pixel.FILLED) {
-						gridWithBorders[r][c == 0 ? 0 : c - 1].value = Pixel.BORDER;
+					if (result[r][c == 0 ? 0 : c - 1].value != Pixel.FILLED &&
+							result[r][c == 0 ? 0 : c - 1].value != Pixel.SECONDARY) {
+						result[r][c == 0 ? 0 : c - 1].value = Pixel.BORDER;
 					}
 
 					// Right
-					if (gridWithBorders[r][c == (gridWithBorders[0].length / 2) - 1 ? (gridWithBorders[0].length / 2) - 1 : c + 1].value != Pixel.FILLED) {
-						gridWithBorders[r][c == (gridWithBorders[0].length / 2) - 1 ? (gridWithBorders[0].length / 2) - 1 : c + 1].value = Pixel.BORDER;
+					if (result[r][c == (result[0].length / 2) - 1 ? (result[0].length / 2) - 1 : c + 1].value != Pixel.FILLED &&
+							result[r][c == (result[0].length / 2) - 1 ? (result[0].length / 2) - 1 : c + 1].value != Pixel.SECONDARY) {
+						result[r][c == (result[0].length / 2) - 1 ? (result[0].length / 2) - 1 : c + 1].value = Pixel.BORDER;
 					}
 
 					// Bottom
-					if (gridWithBorders[r == gridWithBorders.length - 1 ? gridWithBorders.length - 1 : r + 1][c].value != Pixel.FILLED) {
-						gridWithBorders[r == gridWithBorders.length - 1 ? gridWithBorders.length - 1 : r + 1][c].value = Pixel.BORDER;
+					if (result[r == result.length - 1 ? result.length - 1 : r + 1][c].value != Pixel.FILLED &&
+							result[r == result.length - 1 ? result.length - 1 : r + 1][c].value != Pixel.SECONDARY) {
+						result[r == result.length - 1 ? result.length - 1 : r + 1][c].value = Pixel.BORDER;
 					}
 				}
 			}
 		}
 
-		return gridWithBorders;
+		return result;
 	}
 
 	/**
@@ -255,7 +258,7 @@ public class PixelGridUtils {
 				extendedGrid[r + (extendAmount / 2)][c + (extendAmount / 2)] = grid[r][c];
 			}
 		}
-
+		
 		return extendedGrid;
 	}
 
@@ -693,5 +696,15 @@ public class PixelGridUtils {
 		}
 
 		return newPoint;
-	}	
+	}
+	
+	public static void removePixelsByType(Pixel[][] grid, int type) {
+		for (int r = 0; r < grid.length; r++) {
+			for (int c = 0; c < grid[0].length; c++) {
+				if (grid[r][c].value == type) {
+					grid[r][c].value = Pixel.EMPTY;
+				}
+			}
+		}
+	}
 }
