@@ -8,8 +8,8 @@ import ajb.utils.PixelGridUtils;
 
 public class TileGeneratorFactory {
 
-	private final int ROWS = 20;
-	private final int COLS = 20;
+	private final int ROWS = 19;
+	private final int COLS = 19;
 
 	public Pixel[][] create() {
 

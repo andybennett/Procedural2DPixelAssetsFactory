@@ -21,6 +21,10 @@ public class ImageUtils {
 
 	public static BufferedImage outputToImage(Pixel[][] grid, Color primaryColor, Color secondaryColor) {
 		
+		if (primaryColor == null) {
+			primaryColor = Color.decode(ColorUtils.getRandomColour());			
+		}		
+		
 		if (secondaryColor == null) {
 			secondaryColor = Color.decode(ColorUtils.getRandomColour());
 		}
@@ -91,7 +95,7 @@ public class ImageUtils {
 		// Fill background
 		gr.setColor(Color.decode("#1E1E1E"));
 		gr.fillRect(0, 0, width, height);
-
+		
 		int x = 10;
 		int y = 10;
 		int maxYForLine = 0;
