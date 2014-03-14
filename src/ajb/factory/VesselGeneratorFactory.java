@@ -8,8 +8,8 @@ import ajb.utils.PixelGridUtils;
 
 public class VesselGeneratorFactory {
 
-	private final int ROWS = 300;
-	private final int COLS = 300;
+	private final int ROWS = 100;
+	private final int COLS = 100;
 
 	public Pixel[][] create() {
 
@@ -77,8 +77,8 @@ public class VesselGeneratorFactory {
 
 		Point point = new Point(ROWS / 2, COLS - 1);
 
-		int steps = RandomInt.anyRandomIntRange(5, 30);
-		int subSteps = RandomInt.anyRandomIntRange(5, 80);
+		int steps = RandomInt.anyRandomIntRange(5, 15);
+		int subSteps = RandomInt.anyRandomIntRange(5, 40);
 
 		for (int i = 0; i < steps; i++) {
 
@@ -109,8 +109,8 @@ public class VesselGeneratorFactory {
 
 	private void addExtras(Pixel[][] grid) {
 
-		int steps = RandomInt.anyRandomIntRange(0, 20);
-		int subSteps = RandomInt.anyRandomIntRange(5, 40);
+		int steps = RandomInt.anyRandomIntRange(0, 10);
+		int subSteps = RandomInt.anyRandomIntRange(5, 20);
 
 		for (int i = 0; i < steps; i++) {
 			Point point = PixelGridUtils.getRandomFilledPoint(grid);

@@ -8,8 +8,8 @@ import ajb.utils.PixelGridUtils;
 
 public class StationGeneratorFactory {
 
-	private final int ROWS = 300;
-	private final int COLS = 300;
+	private final int ROWS = 100;
+	private final int COLS = 100;
 
 	public Pixel[][] create() {
 
@@ -70,8 +70,8 @@ public class StationGeneratorFactory {
 
 		Point point = new Point(ROWS -1, COLS - 1);
 
-		int steps = RandomInt.anyRandomIntRange(5, 20);
-		int subSteps = RandomInt.anyRandomIntRange(5, 50);
+		int steps = RandomInt.anyRandomIntRange(5, 10);
+		int subSteps = RandomInt.anyRandomIntRange(5, 20);
 
 		for (int i = 0; i < steps; i++) {
 
