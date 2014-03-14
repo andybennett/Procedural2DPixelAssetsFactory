@@ -1,5 +1,6 @@
 package ajb.examples;
 
+import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,8 +33,10 @@ public class CreateImageFullOfConsoles {
         //int identifierHeight = g.getFontMetrics().getHeight();
         //g.drawString(hex.getIdentifier(), (int) hex.getMiddlePoint().getX() - (identifierWidth / 2), (int) hex.getMiddlePoint().getY() + (identifierHeight / 2));						
 		
+		Color primaryColor = Color.decode("#2A2A2A");
+		
 		// create image
-		BufferedImage img = ImageUtils.outputAllToImage(grids, 800, 800, null, null);
+		BufferedImage img = ImageUtils.outputAllToImage(grids, 800, 800, primaryColor, null);
 
 		// save image
 		// replace with the path of wherever you want the image to go - if left

@@ -8,8 +8,8 @@ import ajb.utils.PixelGridUtils;
 
 public class TileGeneratorFactory {
 
-	private final int ROWS = 19;
-	private final int COLS = 19;
+	private final int ROWS = 9;
+	private final int COLS = 9;
 
 	public Pixel[][] create() {
 
@@ -54,8 +54,8 @@ public class TileGeneratorFactory {
 		Pixel[][] grid = new Pixel[ROWS][COLS];
 		PixelGridUtils.initEmptyGrid(grid, ROWS, COLS);
 
-		int steps = 15;
-		int subSteps = 50;
+		int steps = 10;
+		int subSteps = 30;
 
 		for (int i = 0; i < steps; i++) {
 

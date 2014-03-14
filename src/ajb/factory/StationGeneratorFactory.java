@@ -54,7 +54,11 @@ public class StationGeneratorFactory {
 		
 		if (noOfSecondaryPixels > (noOfFilledPixels / 4)) {
 			result = false;
-		}	
+		}
+		
+		if (grid.length > 50 || grid[0].length > 50) {
+			result = false;
+		}		
 		
 		return result;
 	}

@@ -63,7 +63,7 @@ public class VesselGeneratorFactory {
 			result = false;
 		}
 		
-		if (grid.length > 200 || grid[0].length > 80) {
+		if (grid.length > 50 || grid[0].length > 50) {
 			result = false;
 		}		
 		
