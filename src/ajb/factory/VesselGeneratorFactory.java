@@ -68,13 +68,13 @@ public class VesselGeneratorFactory {
 		int result = 0;
 		
 		if (size.equals(AssetSize.RANDOM)) {
-			result = 25;
+			result = 45;
 		} else if (size.equals(AssetSize.SMALL)) {
 			result = 15;
 		} else if (size.equals(AssetSize.MEDIUM)) {
-			result = 20;
+			result = 30;
 		} else if (size.equals(AssetSize.LARGE)) {
-			result = 25;
+			result = 45;
 		}		
 		
 		return result;
@@ -82,7 +82,18 @@ public class VesselGeneratorFactory {
 	
 	private int calculateMinNoOfSubSteps(AssetSize size) {
 		
-		int result = 1;		
+		int result = 1;
+		
+		if (size.equals(AssetSize.RANDOM)) {
+			result = 15;
+		} else if (size.equals(AssetSize.SMALL)) {
+			result = 5;
+		} else if (size.equals(AssetSize.MEDIUM)) {
+			result = 10;
+		} else if (size.equals(AssetSize.LARGE)) {
+			result = 15;
+		}		
+		
 		return result;
 	}
 	
@@ -102,40 +113,6 @@ public class VesselGeneratorFactory {
 		
 		return result;
 	}	
-	
-	private int calculateAssetMaxHeight(AssetSize size) {
-		
-		int result = 0;
-		
-		if (size.equals(AssetSize.RANDOM)) {
-			result = 150;
-		} else if (size.equals(AssetSize.SMALL)) {
-			result = 50;
-		} else if (size.equals(AssetSize.MEDIUM)) {
-			result = 100;
-		} else if (size.equals(AssetSize.LARGE)) {
-			result = 150;
-		}		
-		
-		return result;
-	}	
-	
-	private int calculateAssetMaxWidth(AssetSize size) {
-		
-		int result = 0;
-		
-		if (size.equals(AssetSize.RANDOM)) {
-			result = 70;
-		} else if (size.equals(AssetSize.SMALL)) {
-			result = 50;
-		} else if (size.equals(AssetSize.MEDIUM)) {
-			result = 60;
-		} else if (size.equals(AssetSize.LARGE)) {
-			result = 70;
-		}		
-		
-		return result;
-	}
 
 	private boolean validateGrid(Pixel[][] grid, AssetSize size) {
 		
@@ -166,10 +143,6 @@ public class VesselGeneratorFactory {
 		}		
 		
 		if (noOfSecondaryPixels > (noOfFilledPixels / 4)) {
-			result = false;
-		}
-		
-		if (grid.length > calculateAssetMaxHeight(size) || grid[0].length > calculateAssetMaxWidth(size)) {
 			result = false;
 		}		
 		
