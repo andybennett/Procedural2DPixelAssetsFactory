@@ -1,7 +1,7 @@
 ajbVesselGeneratorFactory
 =========================
 
-A factory that generates 2d pixel assets (Asteroids, Space Stations and Vessels)
+A factory that generates 2d pixel assets (Asteroids, Space Stations, Vessels...)
 
 Depdendent on <a href="https://github.com/andybennett/ajbRandom">ajbRandom</a>
 
