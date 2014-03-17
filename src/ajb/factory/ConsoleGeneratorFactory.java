@@ -72,7 +72,7 @@ public class ConsoleGeneratorFactory {
 
 		Point point = new Point(ROWS -1, COLS - 1);
 
-		int steps = 5;
+		int steps = 2;
 		int subSteps = 10;
 
 		for (int i = 0; i < steps; i++) {

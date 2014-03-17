@@ -5,16 +5,31 @@ import java.awt.Point;
 import ajb.domain.Pixel;
 import ajb.random.RandomInt;
 import ajb.utils.PixelGridUtils;
+import enums.AssetSize;
 
 public class VesselGeneratorFactory {
 
-	private final int ROWS = 100;
-	private final int COLS = 100;
+	private int rows = 0;
+	private int cols = 0;
 
-	public Pixel[][] create() {
+	public Pixel[][] create(AssetSize size) {
 
-		Pixel[][] grid = createBaseGrid();
-		addExtras(grid);
+		if (size.equals(AssetSize.RANDOM)) {
+			rows = 300;
+			cols = 300;
+		} else if (size.equals(AssetSize.SMALL)) {
+			rows = 100;
+			cols = 100;
+		} else if (size.equals(AssetSize.MEDIUM)) {
+			rows = 200;
+			cols = 200;
+		} else if (size.equals(AssetSize.LARGE)) {
+			rows = 300;
+			cols = 300;
+		}
+		
+		Pixel[][] grid = createBaseGrid(size);
+		addExtras(grid, size);
 
 		grid = PixelGridUtils.floor(grid);
 		grid = PixelGridUtils.mirrorCopyGridHorizontally(grid);
@@ -24,14 +39,105 @@ public class VesselGeneratorFactory {
 		PixelGridUtils.addNoiseToFlatPixels(grid);	
 		PixelGridUtils.setPixelDepth(grid);
 
-		if (validateGrid(grid)) {		
+		if (validateGrid(grid, size)) {		
 			return grid;
 		} else {
-			return create();
+			return create(size);
 		}
 	}
+	
+	private int calculateMinNoOfSteps(AssetSize size) {
+		
+		int result = 0;
+		
+		if (size.equals(AssetSize.RANDOM)) {
+			result = 5;
+		} else if (size.equals(AssetSize.SMALL)) {
+			result = 5;
+		} else if (size.equals(AssetSize.MEDIUM)) {
+			result = 10;
+		} else if (size.equals(AssetSize.LARGE)) {
+			result = 15;
+		}		
+		
+		return result;
+	}
+	
+	private int calculateMaxNoOfSteps(AssetSize size) {
+		
+		int result = 0;
+		
+		if (size.equals(AssetSize.RANDOM)) {
+			result = 25;
+		} else if (size.equals(AssetSize.SMALL)) {
+			result = 15;
+		} else if (size.equals(AssetSize.MEDIUM)) {
+			result = 20;
+		} else if (size.equals(AssetSize.LARGE)) {
+			result = 25;
+		}		
+		
+		return result;
+	}	
+	
+	private int calculateMinNoOfSubSteps(AssetSize size) {
+		
+		int result = 1;		
+		return result;
+	}
+	
+	private int calculateMaxNoOfSubSteps(AssetSize size) {
+		
+		int result = 0;
+		
+		if (size.equals(AssetSize.RANDOM)) {
+			result = 50;
+		} else if (size.equals(AssetSize.SMALL)) {
+			result = 30;
+		} else if (size.equals(AssetSize.MEDIUM)) {
+			result = 40;
+		} else if (size.equals(AssetSize.LARGE)) {
+			result = 50;
+		}		
+		
+		return result;
+	}	
+	
+	private int calculateAssetMaxHeight(AssetSize size) {
+		
+		int result = 0;
+		
+		if (size.equals(AssetSize.RANDOM)) {
+			result = 150;
+		} else if (size.equals(AssetSize.SMALL)) {
+			result = 50;
+		} else if (size.equals(AssetSize.MEDIUM)) {
+			result = 100;
+		} else if (size.equals(AssetSize.LARGE)) {
+			result = 150;
+		}		
+		
+		return result;
+	}	
+	
+	private int calculateAssetMaxWidth(AssetSize size) {
+		
+		int result = 0;
+		
+		if (size.equals(AssetSize.RANDOM)) {
+			result = 70;
+		} else if (size.equals(AssetSize.SMALL)) {
+			result = 50;
+		} else if (size.equals(AssetSize.MEDIUM)) {
+			result = 60;
+		} else if (size.equals(AssetSize.LARGE)) {
+			result = 70;
+		}		
+		
+		return result;
+	}
 
-	private boolean validateGrid(Pixel[][] grid) {
+	private boolean validateGrid(Pixel[][] grid, AssetSize size) {
 		
 		boolean result = true;
 		
@@ -63,22 +169,22 @@ public class VesselGeneratorFactory {
 			result = false;
 		}
 		
-		if (grid.length > 50 || grid[0].length > 50) {
+		if (grid.length > calculateAssetMaxHeight(size) || grid[0].length > calculateAssetMaxWidth(size)) {
 			result = false;
 		}		
 		
 		return result;
 	}
 	
-	private Pixel[][] createBaseGrid() {
+	private Pixel[][] createBaseGrid(AssetSize size) {
 
-		Pixel[][] grid = new Pixel[ROWS][COLS];
-		PixelGridUtils.initEmptyGrid(grid, ROWS, COLS);
+		Pixel[][] grid = new Pixel[rows][cols];
+		PixelGridUtils.initEmptyGrid(grid, rows, cols);
 
-		Point point = new Point(ROWS / 2, COLS - 1);
+		Point point = new Point(rows / 2, cols - 1);
 
-		int steps = RandomInt.anyRandomIntRange(5, 15);
-		int subSteps = RandomInt.anyRandomIntRange(5, 40);
+		int steps = RandomInt.anyRandomIntRange(calculateMinNoOfSteps(size), calculateMaxNoOfSteps(size));
+		int subSteps = RandomInt.anyRandomIntRange(calculateMinNoOfSubSteps(size), calculateMaxNoOfSubSteps(size));
 
 		for (int i = 0; i < steps; i++) {
 
@@ -87,9 +193,9 @@ public class VesselGeneratorFactory {
 				// that is closest to the middle, and go again from there...
 
 				// top down
-				for (int x = 0; x < ROWS; x++) {
+				for (int x = 0; x < rows; x++) {
 					// left to right
-					for (int y = 0; y < COLS; y++) {
+					for (int y = 0; y < cols; y++) {
 						if (grid[x][y].value == Pixel.FILLED) {
 							point = new Point(x, y);
 						}
@@ -107,10 +213,10 @@ public class VesselGeneratorFactory {
 		return grid;
 	}
 
-	private void addExtras(Pixel[][] grid) {
+	private void addExtras(Pixel[][] grid, AssetSize size) {
 
-		int steps = RandomInt.anyRandomIntRange(0, 10);
-		int subSteps = RandomInt.anyRandomIntRange(5, 20);
+		int steps = RandomInt.anyRandomIntRange(calculateMinNoOfSteps(size), calculateMaxNoOfSteps(size));
+		int subSteps = RandomInt.anyRandomIntRange(calculateMinNoOfSubSteps(size), calculateMaxNoOfSubSteps(size));
 
 		for (int i = 0; i < steps; i++) {
 			Point point = PixelGridUtils.getRandomFilledPoint(grid);
