@@ -707,4 +707,19 @@ public class PixelGridUtils {
 			}
 		}
 	}
+	
+	public static int countPixelsByType(Pixel[][] grid, int type) {
+		
+		int result = 0;
+		
+		for (int r = 0; r < grid.length; r++) {
+			for (int c = 0; c < grid[0].length; c++) {
+				if (grid[r][c].value == type) {
+					result++;
+				}
+			}
+		}
+		
+		return result;
+	}	
 }
