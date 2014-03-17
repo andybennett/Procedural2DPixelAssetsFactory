@@ -46,74 +46,6 @@ public class VesselGeneratorFactory {
 		}
 	}
 	
-	private int calculateMinNoOfSteps(AssetSize size) {
-		
-		int result = 0;
-		
-		if (size.equals(AssetSize.RANDOM)) {
-			result = 5;
-		} else if (size.equals(AssetSize.SMALL)) {
-			result = 5;
-		} else if (size.equals(AssetSize.MEDIUM)) {
-			result = 10;
-		} else if (size.equals(AssetSize.LARGE)) {
-			result = 15;
-		}		
-		
-		return result;
-	}
-	
-	private int calculateMaxNoOfSteps(AssetSize size) {
-		
-		int result = 0;
-		
-		if (size.equals(AssetSize.RANDOM)) {
-			result = 45;
-		} else if (size.equals(AssetSize.SMALL)) {
-			result = 15;
-		} else if (size.equals(AssetSize.MEDIUM)) {
-			result = 30;
-		} else if (size.equals(AssetSize.LARGE)) {
-			result = 45;
-		}		
-		
-		return result;
-	}	
-	
-	private int calculateMinNoOfSubSteps(AssetSize size) {
-		
-		int result = 1;
-		
-		if (size.equals(AssetSize.RANDOM)) {
-			result = 15;
-		} else if (size.equals(AssetSize.SMALL)) {
-			result = 5;
-		} else if (size.equals(AssetSize.MEDIUM)) {
-			result = 10;
-		} else if (size.equals(AssetSize.LARGE)) {
-			result = 15;
-		}		
-		
-		return result;
-	}
-	
-	private int calculateMaxNoOfSubSteps(AssetSize size) {
-		
-		int result = 0;
-		
-		if (size.equals(AssetSize.RANDOM)) {
-			result = 50;
-		} else if (size.equals(AssetSize.SMALL)) {
-			result = 30;
-		} else if (size.equals(AssetSize.MEDIUM)) {
-			result = 40;
-		} else if (size.equals(AssetSize.LARGE)) {
-			result = 50;
-		}		
-		
-		return result;
-	}	
-
 	private boolean validateGrid(Pixel[][] grid, AssetSize size) {
 		
 		boolean result = true;
@@ -142,9 +74,9 @@ public class VesselGeneratorFactory {
 			result = false;
 		}		
 		
-		if (noOfSecondaryPixels > (noOfFilledPixels / 4)) {
-			result = false;
-		}		
+//		if (noOfSecondaryPixels > (noOfFilledPixels / 4)) {
+//			result = false;
+//		}		
 		
 		return result;
 	}
@@ -188,8 +120,8 @@ public class VesselGeneratorFactory {
 
 	private void addExtras(Pixel[][] grid, AssetSize size) {
 
-		int steps = RandomInt.anyRandomIntRange(calculateMinNoOfSteps(size), calculateMaxNoOfSteps(size));
-		int subSteps = RandomInt.anyRandomIntRange(calculateMinNoOfSubSteps(size), calculateMaxNoOfSubSteps(size));
+		int steps = RandomInt.anyRandomIntRange(calculateMinNoOfSteps(size) - 10, calculateMaxNoOfSteps(size) - 10);
+		int subSteps = RandomInt.anyRandomIntRange(calculateMinNoOfSubSteps(size) - 10, calculateMaxNoOfSubSteps(size) - 10);
 
 		for (int i = 0; i < steps; i++) {
 			Point point = PixelGridUtils.getRandomFilledPoint(grid);
@@ -208,4 +140,72 @@ public class VesselGeneratorFactory {
 
 		return PixelGridUtils.getRandomAdjacentPoint(point, grid);
 	}
+	
+	private int calculateMinNoOfSteps(AssetSize size) {
+		
+		int result = 0;
+		
+		if (size.equals(AssetSize.RANDOM)) {
+			result = 5;
+		} else if (size.equals(AssetSize.SMALL)) {
+			result = 5;
+		} else if (size.equals(AssetSize.MEDIUM)) {
+			result = 10;
+		} else if (size.equals(AssetSize.LARGE)) {
+			result = 20;
+		}		
+		
+		return result;
+	}
+	
+	private int calculateMaxNoOfSteps(AssetSize size) {
+		
+		int result = 0;
+		
+		if (size.equals(AssetSize.RANDOM)) {
+			result = 50;
+		} else if (size.equals(AssetSize.SMALL)) {
+			result = 15;
+		} else if (size.equals(AssetSize.MEDIUM)) {
+			result = 30;
+		} else if (size.equals(AssetSize.LARGE)) {
+			result = 50;
+		}		
+		
+		return result;
+	}	
+	
+	private int calculateMinNoOfSubSteps(AssetSize size) {
+		
+		int result = 1;
+		
+		if (size.equals(AssetSize.RANDOM)) {
+			result = 5;
+		} else if (size.equals(AssetSize.SMALL)) {
+			result = 5;
+		} else if (size.equals(AssetSize.MEDIUM)) {
+			result = 10;
+		} else if (size.equals(AssetSize.LARGE)) {
+			result = 15;
+		}		
+		
+		return result;
+	}
+	
+	private int calculateMaxNoOfSubSteps(AssetSize size) {
+		
+		int result = 0;
+		
+		if (size.equals(AssetSize.RANDOM)) {
+			result = 50;
+		} else if (size.equals(AssetSize.SMALL)) {
+			result = 30;
+		} else if (size.equals(AssetSize.MEDIUM)) {
+			result = 40;
+		} else if (size.equals(AssetSize.LARGE)) {
+			result = 50;
+		}		
+		
+		return result;
+	}	
 }
