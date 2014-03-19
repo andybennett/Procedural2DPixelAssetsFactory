@@ -50,15 +50,12 @@ public class VesselGeneratorFactory {
 
 		boolean result = true;
 
-		int noOfEmptyPixels = 0;
 		int noOfFilledPixels = 0;
 		int noOfSecondaryPixels = 0;
 
 		for (int x = 0; x < grid.length; x++) {
 			for (int y = 0; y < grid[0].length; y++) {
-				if (grid[x][y].value == Pixel.EMPTY) {
-					noOfEmptyPixels++;
-				} else if (grid[x][y].value == Pixel.FILLED) {
+				if (grid[x][y].value == Pixel.FILLED) {
 					noOfFilledPixels++;
 				} else if (grid[x][y].value == Pixel.SECONDARY) {
 					noOfSecondaryPixels++;

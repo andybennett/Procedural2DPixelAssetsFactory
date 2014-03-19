@@ -38,7 +38,7 @@ public class CreateImageFullOfVessels {
 			// save image
 			// replace with the path of wherever you want the image to go - if left
 			// as is it will be in the root project folder
-			ImageUtils.save(img, "png", "vessels_"+size);
+			ImageUtils.save(img, "png", "vessels_" + size);
 		}
 	}
 
