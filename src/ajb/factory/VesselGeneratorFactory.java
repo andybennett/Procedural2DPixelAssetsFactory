@@ -68,15 +68,7 @@ public class VesselGeneratorFactory {
 
 		if (noOfSecondaryPixels == 0) {
 			result = false;
-		}
-		
-		if (noOfEmptyPixels > noOfFilledPixels) {
-			result = false;
 		}		
-		
-//		if (noOfSecondaryPixels > (noOfFilledPixels / 4)) {
-//			result = false;
-//		}		
 		
 		return result;
 	}
