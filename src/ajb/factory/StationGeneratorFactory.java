@@ -2,18 +2,33 @@ package ajb.factory;
 
 import java.awt.Point;
 
+import enums.AssetSize;
 import ajb.domain.Pixel;
 import ajb.random.RandomInt;
 import ajb.utils.PixelGridUtils;
 
 public class StationGeneratorFactory {
 
-	private final int ROWS = 100;
-	private final int COLS = 100;
+	private int rows = 0;
+	private int cols = 0;
 
-	public Pixel[][] create() {
+	public Pixel[][] create(AssetSize size) {
 
-		Pixel[][] grid = createBaseGrid();
+		if (size.equals(AssetSize.RANDOM)) {
+			rows = 300;
+			cols = 300;
+		} else if (size.equals(AssetSize.SMALL)) {
+			rows = 100;
+			cols = 100;
+		} else if (size.equals(AssetSize.MEDIUM)) {
+			rows = 200;
+			cols = 200;
+		} else if (size.equals(AssetSize.LARGE)) {
+			rows = 300;
+			cols = 300;
+		}		
+		
+		Pixel[][] grid = createBaseGrid(size);
 
 		grid = PixelGridUtils.floor(grid);
 		grid = PixelGridUtils.mirrorCopyGridHorizontally(grid);
@@ -27,7 +42,7 @@ public class StationGeneratorFactory {
 		if (validateGrid(grid)) {		
 			return grid;
 		} else {
-			return create();
+			return create(size);
 		}
 	}
 
@@ -54,32 +69,28 @@ public class StationGeneratorFactory {
 		
 		if (noOfSecondaryPixels > (noOfFilledPixels / 4)) {
 			result = false;
-		}
-		
-		if (grid.length > 50 || grid[0].length > 50) {
-			result = false;
 		}		
 		
 		return result;
 	}
 	
-	private Pixel[][] createBaseGrid() {
+	private Pixel[][] createBaseGrid(AssetSize size) {
 
-		Pixel[][] grid = new Pixel[ROWS][COLS];
-		PixelGridUtils.initEmptyGrid(grid, ROWS, COLS);
+		Pixel[][] grid = new Pixel[rows][cols];
+		PixelGridUtils.initEmptyGrid(grid, rows, cols);
 
-		Point point = new Point(ROWS -1, COLS - 1);
+		Point point = new Point(rows -1, cols - 1);
 
-		int steps = RandomInt.anyRandomIntRange(5, 10);
-		int subSteps = RandomInt.anyRandomIntRange(5, 20);
+		int steps = RandomInt.anyRandomIntRange(calculateMinNoOfSteps(size), calculateMaxNoOfSteps(size));
+		int subSteps = RandomInt.anyRandomIntRange(calculateMinNoOfSubSteps(size), calculateMaxNoOfSubSteps(size));
 
 		for (int i = 0; i < steps; i++) {
 
 			if (point == null) {
 				// down top
-				for (int x = ROWS - 1; x > 0; x--) {
+				for (int x = rows - 1; x > 0; x--) {
 					// left to right
-					for (int y = 0; y < COLS; y++) {
+					for (int y = 0; y < cols; y++) {
 						if (grid[x][y].value == Pixel.FILLED) {
 							point = new Point(x, y);
 						}
@@ -106,4 +117,72 @@ public class StationGeneratorFactory {
 
 		return PixelGridUtils.getRandomAdjacentPoint(point, grid);
 	}
+	
+	private int calculateMinNoOfSteps(AssetSize size) {
+
+		int result = 0;
+
+		if (size.equals(AssetSize.RANDOM)) {
+			result = 5;
+		} else if (size.equals(AssetSize.SMALL)) {
+			result = 5;
+		} else if (size.equals(AssetSize.MEDIUM)) {
+			result = 10;
+		} else if (size.equals(AssetSize.LARGE)) {
+			result = 20;
+		}
+
+		return result;
+	}
+
+	private int calculateMaxNoOfSteps(AssetSize size) {
+
+		int result = 0;
+
+		if (size.equals(AssetSize.RANDOM)) {
+			result = 50;
+		} else if (size.equals(AssetSize.SMALL)) {
+			result = 15;
+		} else if (size.equals(AssetSize.MEDIUM)) {
+			result = 30;
+		} else if (size.equals(AssetSize.LARGE)) {
+			result = 50;
+		}
+
+		return result;
+	}
+
+	private int calculateMinNoOfSubSteps(AssetSize size) {
+
+		int result = 1;
+
+		if (size.equals(AssetSize.RANDOM)) {
+			result = 5;
+		} else if (size.equals(AssetSize.SMALL)) {
+			result = 5;
+		} else if (size.equals(AssetSize.MEDIUM)) {
+			result = 10;
+		} else if (size.equals(AssetSize.LARGE)) {
+			result = 15;
+		}
+
+		return result;
+	}
+
+	private int calculateMaxNoOfSubSteps(AssetSize size) {
+
+		int result = 0;
+
+		if (size.equals(AssetSize.RANDOM)) {
+			result = 50;
+		} else if (size.equals(AssetSize.SMALL)) {
+			result = 30;
+		} else if (size.equals(AssetSize.MEDIUM)) {
+			result = 40;
+		} else if (size.equals(AssetSize.LARGE)) {
+			result = 50;
+		}
+
+		return result;
+	}	
 }
