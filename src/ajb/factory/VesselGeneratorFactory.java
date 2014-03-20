@@ -3,9 +3,9 @@ package ajb.factory;
 import java.awt.Point;
 
 import ajb.domain.Pixel;
+import ajb.enums.AssetSize;
 import ajb.random.RandomInt;
 import ajb.utils.PixelGridUtils;
-import enums.AssetSize;
 
 public class VesselGeneratorFactory {
 

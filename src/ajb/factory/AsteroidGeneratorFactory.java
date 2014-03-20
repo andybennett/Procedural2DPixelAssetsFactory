@@ -2,8 +2,8 @@ package ajb.factory;
 
 import java.awt.Point;
 
-import enums.AssetSize;
 import ajb.domain.Pixel;
+import ajb.enums.AssetSize;
 import ajb.utils.PixelGridUtils;
 
 public class AsteroidGeneratorFactory {
@@ -119,9 +119,9 @@ public class AsteroidGeneratorFactory {
 		if (size.equals(AssetSize.SMALL)) {
 			result = 50;
 		} else if (size.equals(AssetSize.MEDIUM)) {
-			result = 80;
+			result = 130;
 		} else if (size.equals(AssetSize.LARGE)) {
-			result = 120;
+			result = 180;
 		}
 
 		return result;

@@ -2,8 +2,8 @@ package ajb.factory;
 
 import java.awt.Point;
 
-import enums.AssetSize;
 import ajb.domain.Pixel;
+import ajb.enums.AssetSize;
 import ajb.random.RandomInt;
 import ajb.utils.PixelGridUtils;
 

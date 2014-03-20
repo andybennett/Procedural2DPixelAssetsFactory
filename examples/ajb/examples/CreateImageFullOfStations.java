@@ -5,8 +5,8 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
 
-import enums.AssetSize;
 import ajb.domain.Pixel;
+import ajb.enums.AssetSize;
 import ajb.factory.StationGeneratorFactory;
 import ajb.utils.ImageUtils;
 
